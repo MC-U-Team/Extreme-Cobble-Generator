@@ -81,7 +81,7 @@ artifacts {
 }
 
 dependencies {
-	compile "u-team-core:u_team_core-1.8-v1.1.2:49:dev"
+	compile "u-team-core:u_team_core-${minecraft.version}-v${config.uteamcore.version}:${config.uteamcore.patch}:dev"
 }
 
 processResources {
