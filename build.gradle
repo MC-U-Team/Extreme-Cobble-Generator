@@ -82,7 +82,7 @@ artifacts {
 
 dependencies {
 	compile "u-team-core:u_team_core-${minecraft.version}-v${config.uteamcore.version}:${config.uteamcore.patch}:dev"
-	deobfCompile fileTree(dir: "libs", include: "*.jar") 
+	//deobfCompile fileTree(dir: "libs", include: "*.jar") 
 }
 
 processResources {
