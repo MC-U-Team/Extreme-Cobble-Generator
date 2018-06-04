@@ -11,6 +11,7 @@ public class ExtremeCobbleGeneratorBlocks {
 	
 	public ExtremeCobbleGeneratorBlocks() {
 		cobblegenerator = new BlockCobbleGenerator("cobblegenerator", tab, ExtremeCobbleGeneratorTileEntities.cobblegenerator);
+		tab.setIcon(cobblegenerator);
 	}
 	
 }

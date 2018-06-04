@@ -13,8 +13,8 @@ public class ExtremeCobbleGeneratorConstants {
 	
 	public static final Logger LOGGER = LogManager.getLogger(NAME);
 	
-	public static final String COMMONPROXY = "de.luckycrew.worldcup.proxy.CommonProxy";
-	public static final String CLIENTPROXY = "de.luckycrew.worldcup.proxy.ClientProxy";
+	public static final String COMMONPROXY = "info.u_team.extreme_cobble_generator.proxy.CommonProxy";
+	public static final String CLIENTPROXY = "info.u_team.extreme_cobble_generator.proxy.ClientProxy";
 	
 	private ExtremeCobbleGeneratorConstants() {
 	}
