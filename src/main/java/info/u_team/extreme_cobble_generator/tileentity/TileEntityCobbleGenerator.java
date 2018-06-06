@@ -25,7 +25,7 @@ public class TileEntityCobbleGenerator extends UTileEntity implements ITickable 
 	private int amount;
 	
 	public TileEntityCobbleGenerator() {
-		energy = new Energy(1000000, maxamount * 4, maxamount * 4, 0);
+		energy = new Energy(1000000, maxamount * multiplier, maxamount * multiplier, 0);
 		working = false;
 		amount = 1;
 	}
