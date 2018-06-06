@@ -5,6 +5,8 @@ import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraftforge.common.capabilities.Capability;
@@ -17,12 +19,15 @@ public class TileEntityCobbleGenerator extends UTileEntity implements ITickable 
 	
 	private boolean working;
 	
+	private int maxamount = 100000;
+	private int multiplier = 4;
+	
 	private int amount;
 	
 	public TileEntityCobbleGenerator() {
-		energy = new Energy(500000, 50000, 50000, 0);
+		energy = new Energy(1000000, maxamount * 4, maxamount * 4, 0);
 		working = false;
-		amount = 512;
+		amount = 1;
 	}
 	
 	// Update
@@ -31,23 +36,24 @@ public class TileEntityCobbleGenerator extends UTileEntity implements ITickable 
 		if (world == null || world.isRemote) {
 			return;
 		}
-		int workingenergy = amount;
+		
+		if (!working) {
+			if (energy.getEnergyStored() >= amount * multiplier) {
+				working = true;
+				markUpdate();
+			}
+		}
 		
 		if (working) {
-			int extract = energy.extractEnergy(workingenergy, true);
-			if (extract < workingenergy) {
+			int extract = energy.extractEnergy(amount * multiplier, true);
+			if (extract < amount * multiplier) {
 				working = false;
 				return;
 			}
 			generateCobble();
-		} else {
-			if (energy.getEnergyStored() >= workingenergy) {
-				working = true;
-			}
+			markUpdate();
 		}
 	}
-	
-	// NBT
 	
 	private void generateCobble() {
 		TileEntity tileentity = world.getTileEntity(getPos().up());
@@ -77,12 +83,22 @@ public class TileEntityCobbleGenerator extends UTileEntity implements ITickable 
 	
 	private boolean addCobbleOutput(IItemHandler handler, int size) {
 		ItemStack errorstack = ItemHandlerHelper.insertItem(handler, new ItemStack(Blocks.COBBLESTONE, size), false);
-		energy.extractEnergy(size - errorstack.getCount(), false);
+		energy.extractEnergy((size - errorstack.getCount()) * multiplier, false);
 		if (!errorstack.isEmpty()) {
 			return false;
 		}
 		return true;
 	}
+	
+	// Server side update
+	private void markUpdate() {
+		world.markBlockRangeForRenderUpdate(pos, pos);
+		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+		world.scheduleBlockUpdate(pos, this.getBlockType(), 0, 0);
+		markDirty();
+	}
+	
+	// NBT
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -99,10 +115,14 @@ public class TileEntityCobbleGenerator extends UTileEntity implements ITickable 
 	
 	public void readNBT(NBTTagCompound compound) {
 		energy.readFromNBT(compound);
+		amount = compound.getInteger("Amount");
+		working = compound.getBoolean("Working");
 	}
 	
 	public void writeNBT(NBTTagCompound compound) {
 		energy.writeToNBT(compound);
+		compound.setInteger("Amount", amount);
+		compound.setBoolean("Working", working);
 	}
 	
 	// Capabilites
@@ -120,6 +140,49 @@ public class TileEntityCobbleGenerator extends UTileEntity implements ITickable 
 			return CapabilityEnergy.ENERGY.cast(energy);
 		}
 		return super.getCapability(capability, facing);
+	}
+	
+	// Sync
+	
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
+	}
+	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return this.writeToNBT(new NBTTagCompound());
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		super.onDataPacket(net, pkt);
+		handleUpdateTag(pkt.getNbtCompound());
+	}
+	
+	// Getter
+	
+	public Energy getEnergy() {
+		return energy;
+	}
+	
+	public int getAmount() {
+		return amount;
+	}
+	
+	public int getMaxAmount() {
+		return maxamount;
+	}
+	
+	public boolean isWorking() {
+		return working;
+	}
+	
+	// Setter (Server side only!)
+	
+	public void setAmount(int amount) {
+		this.amount = amount;
+		markUpdate();
 	}
 	
 }

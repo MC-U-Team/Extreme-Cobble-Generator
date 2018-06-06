@@ -1,7 +1,19 @@
 {
 	"variants": {
-		"normal": {
+		"facing=north": {
 			"model": "extremecobblegenerator:cobblegenerator"
+		},
+		"facing=south": {
+			"model": "extremecobblegenerator:cobblegenerator",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "extremecobblegenerator:cobblegenerator",
+			"y": 270
+		},
+		"facing=east": {
+			"model": "extremecobblegenerator:cobblegenerator",
+			"y": 90
 		}
 	}
 }
