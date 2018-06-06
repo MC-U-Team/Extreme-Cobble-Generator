@@ -1,6 +1,6 @@
 package info.u_team.extreme_cobble_generator.proxy;
 
-import info.u_team.extreme_cobble_generator.render.ExtremeCobbleGeneratorModelRegistry;
+import info.u_team.extreme_cobble_generator.render.*;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -16,6 +16,7 @@ public class ClientProxy extends CommonProxy {
 	
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
+		new ExtremeCobbleGeneratorRenderRegistry();
 	}
 	
 	public void postinit(FMLPostInitializationEvent event) {
