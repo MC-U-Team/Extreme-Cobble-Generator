@@ -31,7 +31,7 @@ repositories {
 
 getBuildNumber()
 
-version = "${config.mod.version}-${config.buildnumber}"
+version = "${config.mod.version}.${config.buildnumber}"
 archivesBaseName = config.mod.filename
 
 sourceCompatibility = targetCompatibility = "1.8"
