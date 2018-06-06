@@ -1,6 +1,5 @@
 package info.u_team.extreme_cobble_generator.network;
 
-import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorConstants;
 import info.u_team.extreme_cobble_generator.network.message.MessageCobbleGeneratorUpdateAmount;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -11,7 +10,7 @@ public class ExtremeCobbleGeneratorNetworkHandler {
 	public static SimpleNetworkWrapper network;
 	
 	public ExtremeCobbleGeneratorNetworkHandler() {
-		network = NetworkRegistry.INSTANCE.newSimpleChannel(ExtremeCobbleGeneratorConstants.MODID);
+		network = NetworkRegistry.INSTANCE.newSimpleChannel("excbbgen"); // This is so annoying that there is no documentation about, that you can use only a limited string size. Took me 1h to find. Thx forge :c
 		message();
 	}
 	

@@ -14,7 +14,9 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.*;
+import net.minecraftforge.fml.relauncher.*;
 
+@SideOnly(Side.CLIENT)
 public class GuiCobbleGenerator extends GuiContainer {
 	
 	private static final ResourceLocation TEXTURE = new ResourceLocation(ExtremeCobbleGeneratorConstants.MODID, "textures/gui/cobblegenerator.png");
