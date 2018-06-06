@@ -46,7 +46,7 @@ minecraft {
     mappings = config.forge.mapping
     makeObfSourceJar = false
 	
-	replace "@VERSION@", "${config.mod.version}-${config.buildnumber}"
+	replace "@VERSION@", "${config.mod.version}.${config.buildnumber}"
 }
 
 jar {
