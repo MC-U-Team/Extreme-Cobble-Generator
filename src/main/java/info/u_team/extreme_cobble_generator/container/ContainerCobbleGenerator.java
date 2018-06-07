@@ -2,8 +2,9 @@ package info.u_team.extreme_cobble_generator.container;
 
 import info.u_team.extreme_cobble_generator.tileentity.TileEntityCobbleGenerator;
 import info.u_team.u_team_core.container.UContainer;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 
 public class ContainerCobbleGenerator extends UContainer {
 	
@@ -19,4 +20,34 @@ public class ContainerCobbleGenerator extends UContainer {
 		}
 	}
 	
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+		ItemStack newstack = ItemStack.EMPTY;
+		Slot slot = this.inventorySlots.get(index);
+		
+		if (slot != null && slot.getHasStack()) {
+			ItemStack oldstack = slot.getStack();
+			newstack = oldstack.copy();
+			
+			if (index >= 0 && index < 27) {
+				if (!this.mergeItemStack(oldstack, 27, 36, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (index >= 27 && index < 36 && !this.mergeItemStack(oldstack, 0, 27, false)) {
+				return ItemStack.EMPTY;
+			}
+			
+			if (oldstack.isEmpty()) {
+				slot.putStack(ItemStack.EMPTY);
+			} else {
+				slot.onSlotChanged();
+			}
+			
+			if (oldstack.getCount() == newstack.getCount()) {
+				return ItemStack.EMPTY;
+			}
+			slot.onTake(player, oldstack);
+		}
+		return newstack;
+	}
 }
