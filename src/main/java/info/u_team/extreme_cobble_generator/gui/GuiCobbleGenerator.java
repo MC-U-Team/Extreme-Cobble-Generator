@@ -79,7 +79,8 @@ public class GuiCobbleGenerator extends GuiContainer {
 		drawCenteredString("" + tileentity.getAmount(), 95, 13, 4210752, false);
 		
 		fontRenderer.drawSplitString("Can generate " + (tileentity.getAmount() * 20) + " cobble per second", 35, 60, 120, 4210752);
-		// drawCenteredString("Can generate " + (tileentity.getAmount() * 20) + " cobble per second", 95, 60, 4210752, false);
+		// drawCenteredString("Can generate " + (tileentity.getAmount() * 20) + " cobble
+		// per second", 95, 60, 4210752, false);
 		
 		int maxenergy = tileentity.getEnergy().getMaxEnergyStored();
 		int energy = tileentity.getEnergy().getEnergyStored();

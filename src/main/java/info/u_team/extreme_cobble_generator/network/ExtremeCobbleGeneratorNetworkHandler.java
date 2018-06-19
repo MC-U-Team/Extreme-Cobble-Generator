@@ -10,7 +10,8 @@ public class ExtremeCobbleGeneratorNetworkHandler {
 	public static SimpleNetworkWrapper network;
 	
 	public ExtremeCobbleGeneratorNetworkHandler() {
-		network = NetworkRegistry.INSTANCE.newSimpleChannel("excbbgen"); // This is so annoying that there is no documentation about, that you can use only a limited string size. Took me 1h to find. Thx forge :c
+		network = NetworkRegistry.INSTANCE.newSimpleChannel("excbbgen"); // This is so annoying that there is no documentation about, that you can use
+																			// only a limited string size. Took me 1h to find. Thx forge :c
 		message();
 	}
 	

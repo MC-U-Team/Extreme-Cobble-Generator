@@ -16,7 +16,7 @@ public class ExtremeCobbleGeneratorGuiHandler implements IGuiHandler {
 		if (ID == 0) {
 			TileEntity tileentity = world.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity instanceof TileEntityCobbleGenerator) {
-				return new ContainerCobbleGenerator(player.inventory,(TileEntityCobbleGenerator) tileentity);
+				return new ContainerCobbleGenerator(player.inventory, (TileEntityCobbleGenerator) tileentity);
 			}
 		}
 		return null;
@@ -24,10 +24,10 @@ public class ExtremeCobbleGeneratorGuiHandler implements IGuiHandler {
 	
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		if(ID == 0) {
+		if (ID == 0) {
 			TileEntity tileentity = world.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity instanceof TileEntityCobbleGenerator) {
-				return new GuiCobbleGenerator(player.inventory,(TileEntityCobbleGenerator) tileentity);
+				return new GuiCobbleGenerator(player.inventory, (TileEntityCobbleGenerator) tileentity);
 			}
 		}
 		return null;

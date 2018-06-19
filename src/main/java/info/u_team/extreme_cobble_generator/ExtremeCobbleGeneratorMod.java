@@ -8,12 +8,8 @@ import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.Mod.*;
 import net.minecraftforge.fml.common.event.*;
 
-@Mod(modid = MODID, name = NAME, version = VERSION, acceptedMinecraftVersions = MCVERSION, dependencies = DEPENDENCIES)
+@Mod(modid = MODID, name = NAME, version = VERSION, acceptedMinecraftVersions = MCVERSION, dependencies = DEPENDENCIES, updateJSON = UPDATEURL)
 public class ExtremeCobbleGeneratorMod extends USubMod {
-	
-	public ExtremeCobbleGeneratorMod() {
-		super(MODID, NAME, VERSION, UPDATEURL);
-	}
 	
 	@Instance
 	private static ExtremeCobbleGeneratorMod instance;

@@ -1,7 +1,7 @@
 package info.u_team.extreme_cobble_generator.energy;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.energy.*;
+import net.minecraftforge.energy.EnergyStorage;
 
 public class Energy extends EnergyStorage {
 	

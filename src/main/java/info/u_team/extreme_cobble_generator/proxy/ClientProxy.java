@@ -2,9 +2,7 @@ package info.u_team.extreme_cobble_generator.proxy;
 
 import info.u_team.extreme_cobble_generator.render.*;
 import net.minecraftforge.fml.common.event.*;
-import net.minecraftforge.fml.relauncher.Side;
-
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
