@@ -37,7 +37,7 @@ public class BlockCobbleGenerator extends UBlockTileEntity {
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
+		return getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
 	}
 	
 	@Override
@@ -83,7 +83,7 @@ public class BlockCobbleGenerator extends UBlockTileEntity {
 	// Rendering
 	
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
 	
@@ -104,7 +104,7 @@ public class BlockCobbleGenerator extends UBlockTileEntity {
 	
 	@Override
 	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-		onBlockDestroyedByPlayer(world, pos, state);
+		onPlayerDestroy(world, pos, state);
 		harvestBlock(world, player, pos, state, world.getTileEntity(pos), player.getHeldItemMainhand());
 		world.setBlockToAir(pos);
 		return false;

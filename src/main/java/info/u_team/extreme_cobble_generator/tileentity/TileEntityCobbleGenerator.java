@@ -37,22 +37,29 @@ public class TileEntityCobbleGenerator extends UTileEntity implements ITickable 
 			return;
 		}
 		
-		if (!working) {
-			if (energy.getEnergyStored() >= amount * multiplier) {
-				working = true;
+		if (world.isBlockPowered(pos) && working) {
+			working = false;
+			markUpdate();
+		}
+		
+		if (!world.isBlockPowered(pos)) {
+			if (!working) {
+				if (energy.getEnergyStored() >= amount * multiplier) {
+					working = true;
+					markUpdate();
+				}
+			}
+			if (working) {
+				int extract = energy.extractEnergy(amount * multiplier, true);
+				if (extract < amount * multiplier) {
+					working = false;
+					return;
+				}
+				generateCobble();
 				markUpdate();
 			}
 		}
 		
-		if (working) {
-			int extract = energy.extractEnergy(amount * multiplier, true);
-			if (extract < amount * multiplier) {
-				working = false;
-				return;
-			}
-			generateCobble();
-			markUpdate();
-		}
 	}
 	
 	private void generateCobble() {
