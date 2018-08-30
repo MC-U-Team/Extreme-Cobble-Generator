@@ -103,7 +103,7 @@ curseforge {
 		addGameVersion minecraft.version
 	
 		relations {
-      		requiredLibrary "u-team-core"
+      		requiredDependency "u-team-core"
     	}
 		
     	mainArtifact(jar) {
