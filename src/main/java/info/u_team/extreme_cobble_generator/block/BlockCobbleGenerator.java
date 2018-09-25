@@ -2,10 +2,12 @@ package info.u_team.extreme_cobble_generator.block;
 
 import javax.annotation.Nonnull;
 
-import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
+import info.u_team.extreme_cobble_generator.*;
+import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorCreativeTabs;
+import info.u_team.extreme_cobble_generator.render.tileentity.TileEntityRendererCobbleGenerator;
 import info.u_team.extreme_cobble_generator.tileentity.TileEntityCobbleGenerator;
 import info.u_team.u_team_core.block.UBlockTileEntity;
-import info.u_team.u_team_core.creativetab.UCreativeTab;
+import info.u_team.u_team_core.registry.ClientRegistry;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -19,14 +21,23 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.*;
 
 public class BlockCobbleGenerator extends UBlockTileEntity {
 	
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	
-	public BlockCobbleGenerator(String name, UCreativeTab tab, UTileEntityProvider provider) {
-		super(name, Material.IRON, tab, provider);
+	public BlockCobbleGenerator(String name) {
+		super(name, Material.IRON, ExtremeCobbleGeneratorCreativeTabs.tab, new UTileEntityProvider(new ResourceLocation(ExtremeCobbleGeneratorConstants.MODID, name + "_tile"), TileEntityCobbleGenerator.class));
 		this.setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
+	}
+	
+	// Model
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void registerModel() {
+		super.registerModel();
+		ClientRegistry.registerSpecialTileEntityRenderer(TileEntityCobbleGenerator.class, new TileEntityRendererCobbleGenerator());
 	}
 	
 	// Facing

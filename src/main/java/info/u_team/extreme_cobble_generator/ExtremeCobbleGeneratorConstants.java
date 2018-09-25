@@ -6,9 +6,9 @@ public class ExtremeCobbleGeneratorConstants {
 	
 	public static final String MODID = "extremecobblegenerator";
 	public static final String NAME = "Extreme Cobble Generator";
-	public static final String VERSION = "@VERSION@";
-	public static final String MCVERSION = "1.12.2";
-	public static final String DEPENDENCIES = "required-after:uteamcore@[1.3.0,);";
+	public static final String VERSION = "${version}";
+	public static final String MCVERSION = "${mcversion}";
+	public static final String DEPENDENCIES = "required:forge@[14.23.4.2705,);required-after:uteamcore@[2.0.0.81,);";
 	public static final String UPDATEURL = "https://api.u-team.info/update/extremecobblegenerator.json";
 	
 	public static final String COMMONPROXY = "info.u_team.extreme_cobble_generator.proxy.CommonProxy";

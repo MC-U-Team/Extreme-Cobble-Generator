@@ -7,15 +7,10 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class ExtremeCobbleGeneratorNetworkHandler {
 	
-	public static SimpleNetworkWrapper network;
+	public static final SimpleNetworkWrapper network = NetworkRegistry.INSTANCE.newSimpleChannel("excbbgen"); // This is so annoying that there is no documentation about, that you can use
+	// only a limited string size. Took me 1h to find. Thx forge :c
 	
-	public ExtremeCobbleGeneratorNetworkHandler() {
-		network = NetworkRegistry.INSTANCE.newSimpleChannel("excbbgen"); // This is so annoying that there is no documentation about, that you can use
-																			// only a limited string size. Took me 1h to find. Thx forge :c
-		message();
-	}
-	
-	private void message() {
+	public static void init() {
 		network.registerMessage(MessageCobbleGeneratorUpdateAmount.Handler.class, MessageCobbleGeneratorUpdateAmount.class, 0, Side.SERVER);
 	}
 	

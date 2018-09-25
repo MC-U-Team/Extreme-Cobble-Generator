@@ -1,0 +1,15 @@
+[
+	{
+		"modid": "extremecobblegenerator",
+		"name": "Extreme Cobble Generator",
+		"version": "${version}",
+		"mcversion": "${mcversion}",
+		"description": "This mod adds an extreme cobblestone generator. We support Forge Energy",
+		"url": "https://u-team.info/mod/extremecobblegenerator",
+		"authorList": [
+			"HyCraftHD"
+		],
+		"credits": "Team U Team",
+		"logoFile": "assets/extremecobblegenerator/logo.png"
+	}
+]
