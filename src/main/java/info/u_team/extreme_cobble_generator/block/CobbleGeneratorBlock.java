@@ -1,21 +1,14 @@
 package info.u_team.extreme_cobble_generator.block;
 
-import javax.annotation.Nonnull;
-
-import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
-import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorItemGroups;
-import info.u_team.extreme_cobble_generator.render.tileentity.TileEntityRendererCobbleGenerator;
-import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
+import info.u_team.extreme_cobble_generator.init.*;
 import info.u_team.u_team_core.block.UTileEntityBlock;
-import info.u_team.u_team_core.util.registry.ClientRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.state.*;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
@@ -25,7 +18,7 @@ public class CobbleGeneratorBlock extends UTileEntityBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	
 	public CobbleGeneratorBlock(String name) {
-		super(name, Material.IRON, ExtremeCobbleGeneratorItemGroups.GROUP);
+		super(name, ExtremeCobbleGeneratorItemGroups.GROUP, Properties.create(Material.IRON).hardnessAndResistance(2.0F), () -> ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
 		this.setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
 	}
 	
