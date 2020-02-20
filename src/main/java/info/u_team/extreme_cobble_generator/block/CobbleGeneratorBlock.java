@@ -23,11 +23,11 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
 
-public class BlockCobbleGenerator extends UBlockTileEntity {
+public class CobbleGeneratorBlock extends UBlockTileEntity {
 	
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	
-	public BlockCobbleGenerator(String name) {
+	public CobbleGeneratorBlock(String name) {
 		super(name, Material.IRON, ExtremeCobbleGeneratorCreativeTabs.tab, new UTileEntityProvider(new ResourceLocation(ExtremeCobbleGeneratorConstants.MODID, name + "_tile"), TileEntityCobbleGenerator.class));
 		this.setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
 	}
