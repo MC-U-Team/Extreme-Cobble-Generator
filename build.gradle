@@ -1,77 +1,68 @@
 buildscript {
-    
-	apply from: "https://raw.githubusercontent.com/HyCraftHD/Blank-Forge-Project/master/build.methods"
-	setup()
-		
-	repositories {
+    repositories {
+        maven { url = "https://files.minecraftforge.net/maven" }
+		maven { url = "https://plugins.gradle.org/m2/" }
         jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
-        maven { url = "https://plugins.gradle.org/m2/" }
+        mavenCentral()
     }
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:${config.forge.gradle}"
-        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.1.0"
+        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
+		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
     }
 }
 
-apply from: "https://raw.githubusercontent.com/HyCraftHD/Blank-Forge-Project/master/build.methods"
-apply from: "https://raw.githubusercontent.com/HyCraftHD/Blank-Forge-Project/master/git.methods"
-setup()
-info()
+apply from: "https://gradle-files.u-team.info/default-project.gradle"
 
-apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: "net.minecraftforge.gradle"
+apply plugin: "eclipse"
 apply plugin: "com.matthewprenger.cursegradle"
 apply plugin: "maven"
 
-repositories {
-	maven { url = "https://repo.u-team.info" }
-}
-
-getBuildNumber()
-
 group = "info.u-team"
-archivesBaseName = "${config.mod.filename}-${config.forge.mcversion}"
-version = "${config.mod.version}.${config.buildnumber}" + getAppendix();
-
-def getAppendix() {
-	if("${config.mod.snapshot}".toBoolean()) {
-		return "-SNAPSHOT"
-	} else {
-		return ""
-	}
-}
+archivesBaseName = generateArchivesBaseName()
+version = generateVersion()
 
 sourceCompatibility = targetCompatibility = "1.8"
 
-compileJava {
-    sourceCompatibility = targetCompatibility = "1.8"
-}
-
 minecraft {
-    version = config.forge.version
-    runDir = "run"
-    mappings = config.forge.mapping
-    makeObfSourceJar = false
-	
-	replace '${version}', project.version
-	replace '${mcversion}', project.minecraft.version
-	replaceIn "info/u_team/extreme_cobble_generator/ExtremeCobbleGeneratorConstants.java"
-}
-
-def normalManifest = {
-	attributes(
-		"Implementation-Title": config.mod.name,
-    	"Implementation-Version": project.version,
-		"Built-On": minecraft.version
-	)
+    mappings channel: config.forge.mapping_channel, version: config.forge.mapping
+    runs {
+        client = {
+            workingDirectory project.file("run/client").canonicalPath
+            mods {
+                "${config.mod.modid}" {
+                    source sourceSets.main
+				}
+			}
+        }
+        server = {
+            workingDirectory project.file("run/server").canonicalPath
+            mods {
+                "${config.mod.modid}" {
+                    source sourceSets.main
+				}
+			}
+        }
+        data = {
+            workingDirectory project.file("run/data").canonicalPath
+            args "--mod", config.mod.modid, "--all", "--output", "\"" + file("src/generated/resources").toString() + "\"", "--validate", "--existing", "\"" + sourceSets.main.resources.srcDirs[0] + "\""
+            mods {
+                "${config.mod.modid}" {
+                    source sourceSets.main
+				}
+			}
+        }
+    }
 }
 
 jar {
 	classifier = ""
 
     from "LICENSE"
+    
+    exclude(".cache")    
        
-    manifest normalManifest
+   	manifest normalManifest
 }
 
 task deobfJar(type: Jar) {
@@ -79,6 +70,8 @@ task deobfJar(type: Jar) {
 
     from sourceSets.main.output
     from "LICENSE"
+    
+    exclude(".cache")    
         
     manifest normalManifest
 }
@@ -110,72 +103,74 @@ artifacts {
     archives jar
 }
 
+signAllJars()
+
 sourceSets {
-   	main {
+	main {
 		java
-		resources
-   	}
+		resources {
+			srcDirs += "src/generated/resources"
+		}
+	}
 }
 
 dependencies {
-	compile "info.u-team:u_team_core-${minecraft.version}:${config.uteamcore.version}:dev"
-}
-
-processResources {
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    from(sourceSets.main.resources.srcDirs) {
-        include "mcmod.info"               
-        expand "version":project.version, "mcversion":project.minecraft.version
-    }
-    from(sourceSets.main.resources.srcDirs) {
-        exclude "mcmod.info"
-    }
-}
-
-compileJava {
-    options.encoding = "UTF-8"
-    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    minecraft getForgeDependency()
+    compile getUTeamCoreDependency()
+    compile fg.deobf(getJeiApiDependency())
+    runtime fg.deobf(getJeiDependency())
 }
 
 curseforge {
-	apiKey = project.getProperty("token")
+	afterEvaluate {
+		tasks."curseforge${config.curse.id}".onlyIf {
+			getValue("token") != null
+		}
+	}
 	
 	tasks.curseforge.dependsOn build
+	
+	apiKey = getValue("token")
 	
   	project {
     	id = config.curse.id
     	releaseType = config.curse.type
 
+		addGameVersion config.forge.mcversion
+		
+		options {
+		    forgeGradleIntegration = false
+		}
+		
 		relations {
       		requiredDependency "u-team-core"
     	}
-		
+
     	mainArtifact(jar) {
-      		displayName = "${config.curse.display}-${minecraft.version}-${version}"
+      		displayName = "${config.curse.display}-${config.forge.mcversion}-${project.version}"
       		changelogType = "html"
-			changelog = "<a href=\"${config.curse.changelog}\">Changelog of ${project.version}</a>"
+      		changelog = "<a href=\"" + generateChangelogUrl() + "\">Changelog of ${project.version}</a>"
     	}
     	
     	addArtifact(deobfJar) {
-    		displayName = "${config.curse.display}-${minecraft.version}-${version}-dev"
+    		displayName = "${config.curse.display}-${config.forge.mcversion}-${project.version}-dev"
     		changelogType = "text"
-    		changelog = "Mappings: " + config.forge.mapping
-		}
+    		changelog = "Mappings: ${config.forge.mapping_channel}_${config.forge.mapping}"
+    	}
   	}
 }
 
 uploadArchives {
+	onlyIf {
+		getValue("mavenpass") != null
+	}
 
 	tasks.uploadArchives.dependsOn build
 
 	repositories {
 		mavenDeployer {
-			if (project.hasProperty("mavenpass")) {
-				repository(url: "https://repo.u-team.info") {
-					authentication(userName: "maven", password: project.getProperty("mavenpass"))
-				}
+			repository(url: "https://repo.u-team.info") {
+				authentication(userName: "maven", password: getValue("mavenpass"))
 			}
 			pom {
 				groupId = project.group
@@ -184,21 +179,21 @@ uploadArchives {
 				project {
 					name project.archivesBaseName
 					packaging "jar"
-					description "Music-Player"
-					url "https://github.com/MC-U-Team/Extreme-Cobble-Generator"
+					description "${config.github.name}"
+					url "https://github.com/MC-U-Team/${config.github.name}"
 					scm {
-						url "https://github.com/MC-U-Team/Extreme-Cobble-Generator"
-						connection "scm:git:git://github.com/MC-U-Team/Extreme-Cobble-Generator.git"
-						developerConnection "scm:git:git@github.com:MC-U-Team/Extreme-Cobble-Generator.git"
+						url "https://github.com/MC-U-Team/${config.github.name}"
+						connection "scm:git:git://github.com/MC-U-Team/${config.github.name}.git"
+						developerConnection "scm:git:git@github.com:MC-U-Team/${config.github.name}.git"
 					}
 					issueManagement {
 						system "github"
-						url "https://github.com/MC-U-Team/Extreme-Cobble-Generator/issues"
+						url "https://github.com/MC-U-Team/${config.github.name}/issues"
 					}
 					licenses {
 						license {
 							name "Apache License 2.0"
-							url "https://github.com/MC-U-Team/Extreme-Cobble-Generator/blob/1.12.2/LICENSE"
+							url "https://github.com/MC-U-Team/${config.github.name}/blob/${config.github.branch}/LICENSE"
 							distribution "repo"
 						}
 					}
@@ -209,6 +204,7 @@ uploadArchives {
 						}
 					}
 				}
+				setConfigurations(null) // Prevent all dependencies in the pom file
 			}
 		}
 	}
@@ -221,5 +217,11 @@ task uploadBoth {
 	tasks.uploadBoth.dependsOn setBuildNumber
 	doLast {
 		println "Published both"
+	}
+}
+
+gradle.taskGraph.whenReady {
+	if (gradle.taskGraph.hasTask(":curseforge${config.curse.id}") || gradle.taskGraph.hasTask(":uploadArchives")) {
+		validateBuild()
 	}
 }
