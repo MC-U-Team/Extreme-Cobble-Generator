@@ -1,6 +1,6 @@
 package info.u_team.extreme_cobble_generator.container;
 
-import info.u_team.extreme_cobble_generator.tileentity.TileEntityCobbleGenerator;
+import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
 import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Slot;
@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerCobbleGenerator extends UContainer {
 	
-	public ContainerCobbleGenerator(InventoryPlayer inventory, TileEntityCobbleGenerator generator) {
+	public ContainerCobbleGenerator(InventoryPlayer inventory, CobbleGeneratorTileEntity generator) {
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
 				this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));

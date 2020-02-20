@@ -1,6 +1,6 @@
 package info.u_team.extreme_cobble_generator.render.tileentity;
 
-import info.u_team.extreme_cobble_generator.tileentity.TileEntityCobbleGenerator;
+import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -10,10 +10,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
-public class TileEntityRendererCobbleGenerator extends TileEntitySpecialRenderer<TileEntityCobbleGenerator> {
+public class TileEntityRendererCobbleGenerator extends TileEntitySpecialRenderer<CobbleGeneratorTileEntity> {
 	
 	@Override
-	public void render(TileEntityCobbleGenerator tileentity, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+	public void render(CobbleGeneratorTileEntity tileentity, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		
 		super.render(tileentity, x, y, z, partialTicks, destroyStage, alpha);
 		

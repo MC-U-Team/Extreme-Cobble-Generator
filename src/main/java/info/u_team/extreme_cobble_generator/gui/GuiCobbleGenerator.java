@@ -7,7 +7,7 @@ import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorConstants;
 import info.u_team.extreme_cobble_generator.container.ContainerCobbleGenerator;
 import info.u_team.extreme_cobble_generator.network.ExtremeCobbleGeneratorNetworkHandler;
 import info.u_team.extreme_cobble_generator.network.message.MessageCobbleGeneratorUpdateAmount;
-import info.u_team.extreme_cobble_generator.tileentity.TileEntityCobbleGenerator;
+import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.*;
@@ -21,11 +21,11 @@ public class GuiCobbleGenerator extends GuiContainer {
 	
 	private static final ResourceLocation TEXTURE = new ResourceLocation(ExtremeCobbleGeneratorConstants.MODID, "textures/gui/cobblegenerator.png");
 	
-	private TileEntityCobbleGenerator tileentity;
+	private CobbleGeneratorTileEntity tileentity;
 	
 	private GuiSlider slider;
 	
-	public GuiCobbleGenerator(InventoryPlayer inventory, TileEntityCobbleGenerator tileentity) {
+	public GuiCobbleGenerator(InventoryPlayer inventory, CobbleGeneratorTileEntity tileentity) {
 		super(new ContainerCobbleGenerator(inventory, tileentity));
 		this.tileentity = tileentity;
 	}

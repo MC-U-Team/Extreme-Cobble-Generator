@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorItemGroups;
 import info.u_team.extreme_cobble_generator.render.tileentity.TileEntityRendererCobbleGenerator;
-import info.u_team.extreme_cobble_generator.tileentity.TileEntityCobbleGenerator;
+import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
 import info.u_team.u_team_core.block.UTileEntityBlock;
 import info.u_team.u_team_core.util.registry.ClientRegistry;
 import net.minecraft.block.*;

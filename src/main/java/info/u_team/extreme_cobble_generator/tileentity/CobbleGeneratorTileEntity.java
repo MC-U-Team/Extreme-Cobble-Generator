@@ -2,18 +2,15 @@ package info.u_team.extreme_cobble_generator.tileentity;
 
 import info.u_team.extreme_cobble_generator.energy.Energy;
 import info.u_team.u_team_core.tileentity.UTileEntity;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.tileentity.*;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.*;
 
-public class TileEntityCobbleGenerator extends UTileEntity implements ITickable {
+public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableTileEntity {
 	
 	private Energy energy;
 	
@@ -24,7 +21,7 @@ public class TileEntityCobbleGenerator extends UTileEntity implements ITickable 
 	
 	private int amount;
 	
-	public TileEntityCobbleGenerator() {
+	public CobbleGeneratorTileEntity() {
 		energy = new Energy(1000000, maxamount * multiplier, maxamount * multiplier, 0);
 		working = false;
 		amount = 1;
@@ -32,7 +29,7 @@ public class TileEntityCobbleGenerator extends UTileEntity implements ITickable 
 	
 	// Update
 	@Override
-	public void update() {
+	public void tick() {
 		if (world == null || world.isRemote) {
 			return;
 		}
