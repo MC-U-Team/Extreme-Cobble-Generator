@@ -14,7 +14,7 @@ public class CommonProxy {
 	}
 	
 	public void init(FMLInitializationEvent event) {
-		ExtremeCobbleGeneratorCreativeTabs.init();
+		ExtremeCobbleGeneratorItemGroups.init();
 		ExtremeCobbleGeneratorNetworkHandler.init();
 		CommonRegistry.registerGuiHandler(ExtremeCobbleGeneratorMod.getInstance(), new ExtremeCobbleGeneratorGuiHandler());
 	}

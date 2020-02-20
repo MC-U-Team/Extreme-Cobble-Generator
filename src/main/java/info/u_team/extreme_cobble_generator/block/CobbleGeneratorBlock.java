@@ -3,7 +3,7 @@ package info.u_team.extreme_cobble_generator.block;
 import javax.annotation.Nonnull;
 
 import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
-import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorCreativeTabs;
+import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorItemGroups;
 import info.u_team.extreme_cobble_generator.render.tileentity.TileEntityRendererCobbleGenerator;
 import info.u_team.extreme_cobble_generator.tileentity.TileEntityCobbleGenerator;
 import info.u_team.u_team_core.block.UTileEntityBlock;
@@ -25,7 +25,7 @@ public class CobbleGeneratorBlock extends UTileEntityBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	
 	public CobbleGeneratorBlock(String name) {
-		super(name, Material.IRON, ExtremeCobbleGeneratorCreativeTabs.tab);
+		super(name, Material.IRON, ExtremeCobbleGeneratorItemGroups.GROUP);
 		this.setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
 	}
 	
