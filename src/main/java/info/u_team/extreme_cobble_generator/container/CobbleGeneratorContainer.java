@@ -6,15 +6,15 @@ import info.u_team.u_team_core.container.UTileEntityContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketBuffer;
 
-public class ContainerCobbleGenerator extends UTileEntityContainer<CobbleGeneratorTileEntity> {
+public class CobbleGeneratorContainer extends UTileEntityContainer<CobbleGeneratorTileEntity> {
 
 	// Client
-	public ContainerCobbleGenerator(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
+	public CobbleGeneratorContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
 		super(ExtremeCobbleGeneratorContainerTypes.GENERATOR, id, playerInventory, buffer);
 	}
 	
 	// Server
-	public ContainerCobbleGenerator(int id, PlayerInventory playerInventory, CobbleGeneratorTileEntity tileEntity) {
+	public CobbleGeneratorContainer(int id, PlayerInventory playerInventory, CobbleGeneratorTileEntity tileEntity) {
 		super(ExtremeCobbleGeneratorContainerTypes.GENERATOR,id, playerInventory, tileEntity);
 	}
 	

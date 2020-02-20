@@ -1,10 +1,10 @@
-package info.u_team.extreme_cobble_generator.gui;
+package info.u_team.extreme_cobble_generator.screen;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorConstants;
-import info.u_team.extreme_cobble_generator.container.ContainerCobbleGenerator;
+import info.u_team.extreme_cobble_generator.container.CobbleGeneratorContainer;
 import info.u_team.extreme_cobble_generator.network.ExtremeCobbleGeneratorNetworkHandler;
 import info.u_team.extreme_cobble_generator.network.message.MessageCobbleGeneratorUpdateAmount;
 import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.client.config.*;
 import net.minecraftforge.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
-public class GuiCobbleGenerator extends GuiContainer {
+public class CobbleGeneratorScreen extends GuiContainer {
 	
 	private static final ResourceLocation TEXTURE = new ResourceLocation(ExtremeCobbleGeneratorConstants.MODID, "textures/gui/cobblegenerator.png");
 	
@@ -25,8 +25,8 @@ public class GuiCobbleGenerator extends GuiContainer {
 	
 	private GuiSlider slider;
 	
-	public GuiCobbleGenerator(InventoryPlayer inventory, CobbleGeneratorTileEntity tileentity) {
-		super(new ContainerCobbleGenerator(inventory, tileentity));
+	public CobbleGeneratorScreen(InventoryPlayer inventory, CobbleGeneratorTileEntity tileentity) {
+		super(new CobbleGeneratorContainer(inventory, tileentity));
 		this.tileentity = tileentity;
 	}
 	
