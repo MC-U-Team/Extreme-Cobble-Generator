@@ -10,6 +10,7 @@ import info.u_team.u_team_core.block.UTileEntityBlock;
 import info.u_team.u_team_core.util.registry.ClientRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.state.*;
 import net.minecraft.state.StateContainer.Builder;
@@ -28,7 +29,11 @@ public class CobbleGeneratorBlock extends UTileEntityBlock {
 		this.setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
 	}
 	
-	// Facing
+	@Override
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult result) {
+		return openContainer(world, pos, player, true);
+	}
+	
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		return getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
@@ -47,25 +52,5 @@ public class CobbleGeneratorBlock extends UTileEntityBlock {
 	@Override
 	public BlockState rotate(BlockState state, Rotation rotation) {
 		return state.with(FACING, rotation.rotate(state.get(FACING)));
-	}
-	
-	// Gui
-	
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (world.isRemote) {
-			return true;
-		}
-		
-		if (player.isSneaking()) {
-			return false;
-		}
-		
-		TileEntity tileentity = world.getTileEntity(pos);
-		
-		if (tileentity instanceof TileEntityCobbleGenerator) {
-			player.openGui(ExtremeCobbleGeneratorMod.getInstance(), 0, world, pos.getX(), pos.getY(), pos.getZ());
-		}
-		return true;
 	}
 }
