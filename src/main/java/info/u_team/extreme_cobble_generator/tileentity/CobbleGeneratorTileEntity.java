@@ -19,6 +19,8 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 	
 	protected final LazyOptional<BasicEnergyStorage> internalEnergyStorageOptional;
 	
+	private boolean powered;
+	
 	private boolean working;
 	
 	private int maxamount = 100000;
@@ -34,10 +36,15 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 		amount = 1;
 	}
 	
+	// Neighbor update
+	public void neighborChanged() {
+		powered = world.isBlockPowered(pos);
+	}
+	
 	// Update
 	@Override
 	public void tick() {
-		if (world == null || world.isRemote) {
+		if (world.isRemote()) {
 			return;
 		}
 		
@@ -106,9 +113,9 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 	
 	// Server side update
 	private void markUpdate() {
-		world.markBlockRangeForRenderUpdate(pos, pos);
+		// world.markBlockRangeForRenderUpdate(pos, pos);
 		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-		world.scheduleBlockUpdate(pos, this.getBlockType(), 0, 0);
+		// world.scheduleBlockUpdate(pos, this.getBlockType(), 0, 0);
 		markDirty();
 	}
 	
