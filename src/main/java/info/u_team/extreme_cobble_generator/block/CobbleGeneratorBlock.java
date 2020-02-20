@@ -2,73 +2,51 @@ package info.u_team.extreme_cobble_generator.block;
 
 import javax.annotation.Nonnull;
 
-import info.u_team.extreme_cobble_generator.*;
+import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorCreativeTabs;
 import info.u_team.extreme_cobble_generator.render.tileentity.TileEntityRendererCobbleGenerator;
 import info.u_team.extreme_cobble_generator.tileentity.TileEntityCobbleGenerator;
-import info.u_team.u_team_core.block.UBlockTileEntity;
-import info.u_team.u_team_core.registry.ClientRegistry;
-import info.u_team.u_team_core.tileentity.UTileEntityProvider;
-import net.minecraft.block.BlockHorizontal;
+import info.u_team.u_team_core.block.UTileEntityBlock;
+import info.u_team.u_team_core.util.registry.ClientRegistry;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.*;
-import net.minecraft.block.state.*;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.state.*;
+import net.minecraft.state.StateContainer.Builder;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.*;
 
-public class CobbleGeneratorBlock extends UBlockTileEntity {
+public class CobbleGeneratorBlock extends UTileEntityBlock {
 	
-	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	
 	public CobbleGeneratorBlock(String name) {
-		super(name, Material.IRON, ExtremeCobbleGeneratorCreativeTabs.tab, new UTileEntityProvider(new ResourceLocation(ExtremeCobbleGeneratorConstants.MODID, name + "_tile"), TileEntityCobbleGenerator.class));
-		this.setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
-	}
-	
-	// Model
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerModel() {
-		super.registerModel();
-		ClientRegistry.registerSpecialTileEntityRenderer(TileEntityCobbleGenerator.class, new TileEntityRendererCobbleGenerator());
+		super(name, Material.IRON, ExtremeCobbleGeneratorCreativeTabs.tab);
+		this.setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
 	}
 	
 	// Facing
 	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+	public BlockState getStateForPlacement(BlockItemUseContext context) {
+		return super.getStateForPlacement(context).with(FACING, context.getPlacementHorizontalFacing().getOpposite());
 	}
 	
 	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
+	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+		builder.add(FACING);
 	}
 	
 	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(FACING).getHorizontalIndex();
+	public BlockState mirror(BlockState state, Mirror mirror) {
+		return state.rotate(mirror.toRotation(state.get(FACING)));
 	}
 	
 	@Override
-	public BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { FACING });
-	}
-	
-	@Override
-	public IBlockState withMirror(IBlockState state, Mirror mirror) {
-		return state.withRotation(mirror.toRotation(state.getValue(FACING)));
-	}
-	
-	@Override
-	public IBlockState withRotation(IBlockState state, Rotation rotation) {
-		return state.withProperty(FACING, rotation.rotate(state.getValue(FACING)));
+	public BlockState rotate(BlockState state, Rotation rotation) {
+		return state.with(FACING, rotation.rotate(state.get(FACING)));
 	}
 	
 	// Gui
