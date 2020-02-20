@@ -1,19 +1,23 @@
 package info.u_team.extreme_cobble_generator.tileentity;
 
-import info.u_team.extreme_cobble_generator.energy.Energy;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorTileEntityTypes;
+import info.u_team.u_team_core.energy.BasicEnergyStorage;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.NetworkManager;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.*;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.*;
 
 public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableTileEntity {
 	
-	private Energy energy;
+	protected final BasicEnergyStorage internalEnergyStorage;
+	
+	protected final LazyOptional<BasicEnergyStorage> internalEnergyStorageOptional;
 	
 	private boolean working;
 	
@@ -24,7 +28,8 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 	
 	public CobbleGeneratorTileEntity() {
 		super(ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
-		energy = new Energy(1000000, maxamount * multiplier, maxamount * multiplier, 0);
+		internalEnergyStorage = new BasicEnergyStorage(1000000, maxamount * multiplier, maxamount * multiplier, 0);
+		internalEnergyStorageOptional = LazyOptional.of(() -> internalEnergyStorage);
 		working = false;
 		amount = 1;
 	}
@@ -63,12 +68,15 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 	
 	private void generateCobble() {
 		TileEntity tileentity = world.getTileEntity(getPos().up());
-		if (tileentity == null || !tileentity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP)) {
+		
+		LazyOptional<IItemHandler> capability = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
+		
+		if (tileentity == null || !capability.isPresent()) {
 			working = false;
 			return;
 		}
-		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 		
+		IItemHandler handler = capability.orElse(null);
 		int stacks = amount >> 6;
 		int rest = amount % 64;
 		
@@ -104,91 +112,27 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 		markDirty();
 	}
 	
-	// NBT
-	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		super.writeToNBT(compound);
-		writeNBT(compound);
-		return compound;
+	public void writeNBT(CompoundNBT compound) {
+		compound.put("energy", internalEnergyStorage.serializeNBT());
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		super.readFromNBT(compound);
-		readNBT(compound);
+	public void readNBT(CompoundNBT compound) {
+		internalEnergyStorage.deserializeNBT(compound.getCompound("energy"));
 	}
 	
-	public void readNBT(NBTTagCompound compound) {
-		energy.readFromNBT(compound);
-		amount = compound.getInteger("Amount");
-		working = compound.getBoolean("Working");
-	}
-	
-	public void writeNBT(NBTTagCompound compound) {
-		energy.writeToNBT(compound);
-		compound.setInteger("Amount", amount);
-		compound.setBoolean("Working", working);
-	}
-	
-	// Capabilites
 	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+	public void remove() {
+		super.remove();
+		internalEnergyStorageOptional.invalidate();
+	}
+	
+	@Override
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
 		if (capability == CapabilityEnergy.ENERGY) {
-			return true;
+			return internalEnergyStorageOptional.cast();
 		}
-		return super.hasCapability(capability, facing);
+		return super.getCapability(capability);
 	}
-	
-	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (capability == CapabilityEnergy.ENERGY) {
-			return CapabilityEnergy.ENERGY.cast(energy);
-		}
-		return super.getCapability(capability, facing);
-	}
-	
-	// Sync
-	
-	@Override
-	public SPacketUpdateTileEntity getUpdatePacket() {
-		return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
-	}
-	
-	@Override
-	public NBTTagCompound getUpdateTag() {
-		return this.writeToNBT(new NBTTagCompound());
-	}
-	
-	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-		super.onDataPacket(net, pkt);
-		handleUpdateTag(pkt.getNbtCompound());
-	}
-	
-	// Getter
-	
-	public Energy getEnergy() {
-		return energy;
-	}
-	
-	public int getAmount() {
-		return amount;
-	}
-	
-	public int getMaxAmount() {
-		return maxamount;
-	}
-	
-	public boolean isWorking() {
-		return working;
-	}
-	
-	// Setter (Server side only!)
-	
-	public void setAmount(int amount) {
-		this.amount = amount;
-		markUpdate();
-	}
-	
 }
