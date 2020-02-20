@@ -1,6 +1,7 @@
 package info.u_team.extreme_cobble_generator.tileentity;
 
 import info.u_team.extreme_cobble_generator.energy.Energy;
+import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorTileEntityTypes;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
@@ -22,6 +23,7 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 	private int amount;
 	
 	public CobbleGeneratorTileEntity() {
+		super(ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
 		energy = new Energy(1000000, maxamount * multiplier, maxamount * multiplier, 0);
 		working = false;
 		amount = 1;
