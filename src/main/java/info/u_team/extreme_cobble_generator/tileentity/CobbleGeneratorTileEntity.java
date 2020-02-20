@@ -1,5 +1,6 @@
 package info.u_team.extreme_cobble_generator.tileentity;
 
+import info.u_team.extreme_cobble_generator.config.CommonConfig;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorTileEntityTypes;
 import info.u_team.u_team_core.energy.BasicEnergyStorage;
 import info.u_team.u_team_core.tileentity.UTileEntity;
@@ -15,6 +16,9 @@ import net.minecraftforge.items.*;
 
 public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableTileEntity {
 	
+	private final int capacity = CommonConfig.getInstance().capacity.get();
+	private final int maxReceive = CommonConfig.getInstance().capacity.get();
+	
 	protected final BasicEnergyStorage internalEnergyStorage;
 	
 	protected final LazyOptional<BasicEnergyStorage> internalEnergyStorageOptional;
@@ -23,22 +27,25 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 	
 	private boolean working;
 	
-	private int maxamount = 100000;
-	private int multiplier = 4;
+	private LazyOptional<IItemHandler> externalStorage;
 	
 	private int amount;
 	
 	public CobbleGeneratorTileEntity() {
 		super(ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
-		internalEnergyStorage = new BasicEnergyStorage(1000000, maxamount * multiplier, maxamount * multiplier, 0);
+		internalEnergyStorage = new BasicEnergyStorage(capacity, maxReceive, 0, 0);
 		internalEnergyStorageOptional = LazyOptional.of(() -> internalEnergyStorage);
-		working = false;
-		amount = 1;
 	}
 	
 	// Neighbor update
 	public void neighborChanged() {
+		System.out.println("Neightbor update");
+		
 		powered = world.isBlockPowered(pos);
+		final TileEntity tileEntity = world.getTileEntity(getPos().up());
+		if (tileEntity != null) {
+			externalStorage = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN);
+		}
 	}
 	
 	// Update
@@ -48,28 +55,27 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 			return;
 		}
 		
-		if (world.isBlockPowered(pos) && working) {
+		if (powered && working) {
 			working = false;
-			markUpdate();
 		}
 		
-		if (!world.isBlockPowered(pos)) {
-			if (!working) {
-				if (energy.getEnergyStored() >= amount * multiplier) {
-					working = true;
-					markUpdate();
-				}
-			}
-			if (working) {
-				int extract = energy.extractEnergy(amount * multiplier, true);
-				if (extract < amount * multiplier) {
-					working = false;
-					return;
-				}
-				generateCobble();
-				markUpdate();
-			}
-		}
+//		if (!world.isBlockPowered(pos)) {
+//			if (!working) {
+//				if (energy.getEnergyStored() >= amount * multiplier) {
+//					working = true;
+//					markUpdate();
+//				}
+//			}
+//			if (working) {
+//				int extract = energy.extractEnergy(amount * multiplier, true);
+//				if (extract < amount * multiplier) {
+//					working = false;
+//					return;
+//				}
+//				generateCobble();
+//				markUpdate();
+//			}
+//		}
 		
 	}
 	
@@ -103,11 +109,11 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 	}
 	
 	private boolean addCobbleOutput(IItemHandler handler, int size) {
-		ItemStack errorstack = ItemHandlerHelper.insertItem(handler, new ItemStack(Blocks.COBBLESTONE, size), false);
-		energy.extractEnergy((size - errorstack.getCount()) * multiplier, false);
-		if (!errorstack.isEmpty()) {
-			return false;
-		}
+//		ItemStack errorstack = ItemHandlerHelper.insertItem(handler, new ItemStack(Blocks.COBBLESTONE, size), false);
+//		energy.extractEnergy((size - errorstack.getCount()) * multiplier, false);
+//		if (!errorstack.isEmpty()) {
+//			return false;
+//		}
 		return true;
 	}
 	
