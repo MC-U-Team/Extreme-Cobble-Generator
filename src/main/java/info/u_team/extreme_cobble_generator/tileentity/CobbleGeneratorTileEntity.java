@@ -3,11 +3,11 @@ package info.u_team.extreme_cobble_generator.tileentity;
 import info.u_team.extreme_cobble_generator.config.CommonConfig;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorTileEntityTypes;
 import info.u_team.u_team_core.energy.BasicEnergyStorage;
-import info.u_team.u_team_core.tileentity.UTileEntity;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.*;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.concurrent.TickDelayedTask;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -17,6 +17,9 @@ public class CobbleGeneratorTileEntity extends TickableTileEntity {
 	
 	private final int capacity = CommonConfig.getInstance().capacity.get();
 	private final int maxReceive = CommonConfig.getInstance().capacity.get();
+	
+	private final int costPerCobble = CommonConfig.getInstance().costPerCobble.get();
+	private final int maxGeneration = CommonConfig.getInstance().maxGeneration.get();
 	
 	protected final BasicEnergyStorage internalEnergyStorage;
 	
@@ -65,75 +68,63 @@ public class CobbleGeneratorTileEntity extends TickableTileEntity {
 	// Update
 	@Override
 	public void tickServer() {
-		if (powered && working) {
-			working = false;
-		}
-		
-		// if (!world.isBlockPowered(pos)) {
-		// if (!working) {
-		// if (energy.getEnergyStored() >= amount * multiplier) {
-		// working = true;
-		// markUpdate();
-		// }
-		// }
-		// if (working) {
-		// int extract = energy.extractEnergy(amount * multiplier, true);
-		// if (extract < amount * multiplier) {
-		// working = false;
-		// return;
-		// }
-		// generateCobble();
-		// markUpdate();
-		// }
-		// }
-		
-	}
-	
-	private void generateCobble() {
-		TileEntity tileentity = world.getTileEntity(getPos().up());
-		
-		LazyOptional<IItemHandler> capability = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
-		
-		if (tileentity == null || !capability.isPresent()) {
+		if (powered) {
 			working = false;
 			return;
 		}
 		
-		IItemHandler handler = capability.orElse(null);
-		int stacks = amount >> 6;
-		int rest = amount % 64;
+		if (!externalStorage.isPresent()) {
+			return;
+		}
+		
+		if (!working) {
+			if (internalEnergyStorage.getEnergy() < costPerCobble * amount) {
+				return;
+			}
+			working = true;
+		}
+		
+		if (internalEnergyStorage.getEnergy() < costPerCobble * amount) {
+			working = false;
+			return;
+		}
+		
+		final IItemHandler storage = externalStorage.orElseThrow(AssertionError::new);
+		
+		final int stacks = amount >> 6;
+		final int rest = amount % 64;
 		
 		for (int i = 0; i < stacks; i++) {
-			if (!addCobbleOutput(handler, 64)) {
+			if (!addCobbleOutput(storage, 64)) {
 				working = false;
 				return;
 			}
 		}
 		
 		if (rest > 0) {
-			if (!addCobbleOutput(handler, rest)) {
+			if (!addCobbleOutput(storage, rest)) {
 				working = false;
 				return;
 			}
 		}
 	}
 	
-	private boolean addCobbleOutput(IItemHandler handler, int size) {
-		// ItemStack errorstack = ItemHandlerHelper.insertItem(handler, new ItemStack(Blocks.COBBLESTONE, size), false);
-		// energy.extractEnergy((size - errorstack.getCount()) * multiplier, false);
-		// if (!errorstack.isEmpty()) {
-		// return false;
-		// }
+	private boolean addCobbleOutput(IItemHandler handler, int count) {
+		final ItemStack itemLeft = ItemHandlerHelper.insertItem(handler, new ItemStack(Blocks.COBBLESTONE, count), false);
+		internalEnergyStorage.addEnergy(-(count - itemLeft.getCount()) * costPerCobble);
+		if (!itemLeft.isEmpty()) {
+			return false;
+		}
 		return true;
 	}
 	
 	// Server side update
-	private void markUpdate() {
-		// world.markBlockRangeForRenderUpdate(pos, pos);
-		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-		// world.scheduleBlockUpdate(pos, this.getBlockType(), 0, 0);
-		markDirty();
-	}
+	// private void markUpdate() {
+	// // world.markBlockRangeForRenderUpdate(pos, pos);
+	// world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+	// // world.scheduleBlockUpdate(pos, this.getBlockType(), 0, 0);
+	// markDirty();
+	// }
 	
 	@Override
 	public void writeNBT(CompoundNBT compound) {
