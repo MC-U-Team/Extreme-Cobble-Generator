@@ -1,5 +1,7 @@
 package info.u_team.extreme_cobble_generator.screen;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+
 import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
 import info.u_team.extreme_cobble_generator.container.CobbleGeneratorContainer;
 import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
@@ -71,7 +73,12 @@ public class CobbleGeneratorScreen extends UContainerScreen<CobbleGeneratorConta
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		font.drawString(title.getFormattedText(), 8, 6, 4210752);
 		font.drawString(playerInventory.getDisplayName().getFormattedText(), 8.0F, ySize - 94, 4210752);
-		blit(guiLeft + 158, guiTop + 68, xSize + (container.getTileEntity().isWorking() ? 32 : 0), 0, 32, 32, 10, 10, 256, 256);
+	}
+	
+	@Override
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+		blit(guiLeft + 155, guiTop + 75, 10, 10, xSize + (container.getTileEntity().isWorking() ? 32 : 0), 0, 32, 32, backgroundWidth, backgroundHeight);
 	}
 	
 	@Override
