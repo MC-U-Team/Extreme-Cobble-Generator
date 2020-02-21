@@ -1,7 +1,5 @@
 package info.u_team.extreme_cobble_generator.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
 import info.u_team.extreme_cobble_generator.container.CobbleGeneratorContainer;
 import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
@@ -67,6 +65,10 @@ public class CobbleGeneratorScreen extends UContainerScreen<CobbleGeneratorConta
 		super.render(mouseX, mouseY, partialTicks);
 		buttons.forEach(button -> button.renderToolTip(mouseX, mouseY));
 		renderHoveredToolTip(mouseX, mouseY);
+		
+		if (isPointInRegion(154, 74, 12, 12, mouseX, mouseY)) {
+			renderTooltip(container.getTileEntity().isWorking() ? "Working" : "Idling", mouseX, mouseY);
+		}
 	}
 	
 	@Override
