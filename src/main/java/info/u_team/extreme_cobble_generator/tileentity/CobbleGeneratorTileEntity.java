@@ -207,7 +207,7 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 		if (capability == CapabilityEnergy.ENERGY) {
 			return energyAcceptor.cast();
 		}
-		return super.getCapability(capability);
+		return super.getCapability(capability, side);
 	}
 	
 	// Init synced
