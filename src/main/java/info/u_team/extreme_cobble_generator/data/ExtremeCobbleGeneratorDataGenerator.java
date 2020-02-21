@@ -19,6 +19,9 @@ public class ExtremeCobbleGeneratorDataGenerator {
 			data.addProvider(ExtremeCobbleGeneratorItemModelsProvider::new);
 			data.addProvider(ExtremeCobbleGeneratorLanguagesProvider::new);
 		}
+		if (event.includeServer()) {
+			data.addProvider(ExtremeCobbleGeneratorLootTablesProvider::new);
+		}
 	}
 	
 }
