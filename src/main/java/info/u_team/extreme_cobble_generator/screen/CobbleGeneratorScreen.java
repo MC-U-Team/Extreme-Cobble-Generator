@@ -75,6 +75,7 @@ public class CobbleGeneratorScreen extends UContainerScreen<CobbleGeneratorConta
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		font.drawString(title.getFormattedText(), 8, 6, 4210752);
 		font.drawString(playerInventory.getDisplayName().getFormattedText(), 8.0F, ySize - 94, 4210752);
+		font.drawSplitString("Can generate " + (container.getTileEntity().getAmount() * 20) + " cobble per second", 36, 58, 120, 4210752);
 	}
 	
 	@Override
