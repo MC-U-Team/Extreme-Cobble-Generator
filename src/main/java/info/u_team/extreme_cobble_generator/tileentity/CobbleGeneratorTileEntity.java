@@ -2,7 +2,7 @@ package info.u_team.extreme_cobble_generator.tileentity;
 
 import info.u_team.extreme_cobble_generator.config.CommonConfig;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorTileEntityTypes;
-import info.u_team.u_team_core.energy.BasicEnergyStorage;
+import info.u_team.u_team_core.energy.*;
 import info.u_team.u_team_core.tileentity.UTickableTileEntity;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
@@ -24,20 +24,25 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity {
 	
 	protected final BasicEnergyStorage internalEnergyStorage;
 	
-	private int amount;
+	protected final LazyOptional<BasicEnergyAcceptorDelegate> energyAcceptor;
 	
-	protected final LazyOptional<BasicEnergyStorage> internalEnergyStorageOptional;
+	private int amount;
 	
 	private LazyOptional<IItemHandler> externalStorage;
 	
 	private boolean powered;
-	
 	private boolean working;
 	
 	public CobbleGeneratorTileEntity() {
 		super(ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
-		internalEnergyStorage = new BasicEnergyStorage(capacity, maxReceive, 0, 0);
-		internalEnergyStorageOptional = LazyOptional.of(() -> internalEnergyStorage);
+		internalEnergyStorage = new BasicEnergyStorage(capacity, maxReceive, maxReceive, 0) {
+			
+			@Override
+			public void onEnergyChanged() {
+				markDirty();
+			}
+		};
+		energyAcceptor = LazyOptional.of(() -> new BasicEnergyAcceptorDelegate(internalEnergyStorage));
 		externalStorage = LazyOptional.empty();
 	}
 	
@@ -147,13 +152,13 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity {
 	@Override
 	public void remove() {
 		super.remove();
-		internalEnergyStorageOptional.invalidate();
+		energyAcceptor.invalidate();
 	}
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
 		if (capability == CapabilityEnergy.ENERGY) {
-			return internalEnergyStorageOptional.cast();
+			return energyAcceptor.cast();
 		}
 		return super.getCapability(capability);
 	}
