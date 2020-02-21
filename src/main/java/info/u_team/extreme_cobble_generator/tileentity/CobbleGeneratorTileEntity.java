@@ -54,7 +54,7 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 	private final BufferReferenceHolder energyHolder;
 	private final BufferReferenceHolder workingHolder;
 	private final BufferReferenceHolder amountHolder;
-	private final MessageHolder amountUpdateHolder;
+	private final MessageHolder amountUpdateMessage;
 	
 	public CobbleGeneratorTileEntity() {
 		super(ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
@@ -71,8 +71,8 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 		energyHolder = internalEnergyStorage.createSyncHandler();
 		workingHolder = BufferReferenceHolder.createBooleanHolder(() -> working, value -> working = value);
 		amountHolder = BufferReferenceHolder.createIntHolder(() -> amount, value -> amount = value);
-		amountUpdateHolder = new MessageHolder(packet -> {
-			amount = Math.min(packet.readInt(), maxGeneration);
+		amountUpdateMessage = new MessageHolder(packet -> {
+			amount = Math.max(0, Math.min(packet.readInt(), maxGeneration));
 			markDirty();
 		});
 	}
@@ -227,7 +227,7 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 		return new CobbleGeneratorContainer(id, playerInventory, this);
 	}
 	
-	// Getter
+	// Message holder
 	
 	public BufferReferenceHolder getEnergyHolder() {
 		return energyHolder;
@@ -241,8 +241,22 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 		return amountHolder;
 	}
 	
-	public MessageHolder getAmountUpdateHolder() {
-		return amountUpdateHolder;
+	public MessageHolder getAmountUpdateMessage() {
+		return amountUpdateMessage;
+	}
+	
+	// Getter
+	
+	public BasicEnergyStorage getInternalEnergyStorage() {
+		return internalEnergyStorage;
+	}
+	
+	public int getAmount() {
+		return amount;
+	}
+	
+	public boolean isWorking() {
+		return working;
 	}
 	
 }

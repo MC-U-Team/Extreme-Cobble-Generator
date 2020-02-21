@@ -20,11 +20,11 @@ public class CobbleGeneratorContainer extends UTileEntityContainer<CobbleGenerat
 	
 	@Override
 	protected void init(boolean server) {
-		appendPlayerInventory(playerInventory, 8, 84);
+		appendPlayerInventory(playerInventory, 8, 91);
 		addServerToClientTracker(tileEntity.getEnergyHolder());
 		addServerToClientTracker(tileEntity.getWorkingHolder());
 		addServerToClientTracker(tileEntity.getAmountHolder());
-		addClientToServerTracker(tileEntity.getAmountUpdateHolder());
+		addClientToServerTracker(tileEntity.getAmountUpdateMessage());
 	}
 	
 	// public ContainerCobbleGenerator(InventoryPlayer inventory, CobbleGeneratorTileEntity generator) {
