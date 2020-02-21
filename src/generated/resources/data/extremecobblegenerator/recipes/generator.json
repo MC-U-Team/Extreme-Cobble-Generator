@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"IAI",
+		"IGI",
+		"BCB"
+	],
+	"key": {
+		"I": {
+			"tag": "forge:ingots/iron"
+		},
+		"B": {
+			"tag": "forge:storage_blocks/iron"
+		},
+		"A": {
+			"item": "minecraft:anvil"
+		},
+		"G": {
+			"tag": "forge:glass_panes"
+		},
+		"C": {
+			"tag": "forge:cobblestone"
+		}
+	},
+	"result": {
+		"item": "extremecobblegenerator:generator"
+	}
+}

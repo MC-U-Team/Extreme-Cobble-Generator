@@ -21,6 +21,7 @@ public class ExtremeCobbleGeneratorDataGenerator {
 		}
 		if (event.includeServer()) {
 			data.addProvider(ExtremeCobbleGeneratorLootTablesProvider::new);
+			data.addProvider(ExtremeCobbleGeneratorRecipesProvider::new);
 		}
 	}
 	
