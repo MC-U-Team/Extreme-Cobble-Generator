@@ -6,6 +6,7 @@ import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity
 import info.u_team.u_team_core.gui.UContainerScreen;
 import info.u_team.u_team_core.gui.elements.*;
 import io.netty.buffer.Unpooled;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
@@ -40,7 +41,7 @@ public class CobbleGeneratorScreen extends UContainerScreen<CobbleGeneratorConta
 		addButton(new BetterButton(guiLeft + 121, guiTop + 20, 15, 15, 0.75F, "-", button -> sendUpdateAddValueMessage(-10)));
 		addButton(new BetterButton(guiLeft + 141, guiTop + 20, 15, 15, 0.75F, "-", button -> sendUpdateAddValueMessage(-100)));
 		
-		slider = addButton(new BetterFontSlider(guiLeft + 36, guiTop + 40, 120, 15, "Amount: ", "", 0, tileEntity.maxGeneration, tileEntity.getAmount(), false, true, 0.75F, null) {
+		slider = addButton(new BetterFontSlider(guiLeft + 36, guiTop + 40, 120, 15, I18n.format("container.extremecobblegenerator.generator.amount") + ": ", "", 0, tileEntity.maxGeneration, tileEntity.getAmount(), false, true, 0.75F, null) {
 			
 			@Override
 			public void onRelease(double mouseX, double mouseY) {
@@ -67,7 +68,7 @@ public class CobbleGeneratorScreen extends UContainerScreen<CobbleGeneratorConta
 		renderHoveredToolTip(mouseX, mouseY);
 		
 		if (isPointInRegion(154, 74, 12, 12, mouseX, mouseY)) {
-			renderTooltip(container.getTileEntity().isWorking() ? "Working" : "Idling", mouseX, mouseY);
+			renderTooltip(container.getTileEntity().isWorking() ? I18n.format("container.extremecobblegenerator.generator.working") : I18n.format("container.extremecobblegenerator.generator.idling"), mouseX, mouseY);
 		}
 	}
 	
@@ -75,7 +76,7 @@ public class CobbleGeneratorScreen extends UContainerScreen<CobbleGeneratorConta
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		font.drawString(title.getFormattedText(), 8, 6, 4210752);
 		font.drawString(playerInventory.getDisplayName().getFormattedText(), 8.0F, ySize - 94, 4210752);
-		font.drawSplitString("Can generate " + (container.getTileEntity().getAmount() * 20) + " cobble per second", 36, 58, 120, 4210752);
+		font.drawSplitString(I18n.format("container.extremecobblegenerator.generator.description", container.getTileEntity().getAmount() * 20), 36, 58, 120, 4210752);
 	}
 	
 	@Override

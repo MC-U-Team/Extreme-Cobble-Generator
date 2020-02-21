@@ -1,0 +1,9 @@
+{
+	"block.extremecobblegenerator.generator": "Extreme Cobblestone Generator",
+	"container.extremecobblegenerator.generator": "Cobblestone Generator",
+	"container.extremecobblegenerator.generator.amount": "Amount",
+	"container.extremecobblegenerator.generator.description": "Can generate %s cobble per second",
+	"container.extremecobblegenerator.generator.idling": "Idling",
+	"container.extremecobblegenerator.generator.working": "Working",
+	"itemGroup.extremecobblegenerator.group": "Extreme Cobblestone Generator"
+}

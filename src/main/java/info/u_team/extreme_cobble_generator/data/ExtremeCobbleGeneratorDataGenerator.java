@@ -17,7 +17,7 @@ public class ExtremeCobbleGeneratorDataGenerator {
 		if (event.includeClient()) {
 			data.addProvider(ExtremeCobbleGeneratorBlockStatesProvider::new);
 			data.addProvider(ExtremeCobbleGeneratorItemModelsProvider::new);
-			// data.addProvider(ExtremeCobbleGeneratorLanguagesProvider::new);
+			data.addProvider(ExtremeCobbleGeneratorLanguagesProvider::new);
 		}
 	}
 	
