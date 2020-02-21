@@ -55,6 +55,7 @@ public class CobbleGeneratorScreen extends UContainerScreen<CobbleGeneratorConta
 	}
 	
 	private void sendUpdateMessage(int value) {
+		container.getTileEntity().setAmount(value);
 		container.getTileEntity().getAmountUpdateMessage().triggerMessage(() -> new PacketBuffer(Unpooled.copyInt(value)));
 	}
 	
@@ -70,6 +71,7 @@ public class CobbleGeneratorScreen extends UContainerScreen<CobbleGeneratorConta
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		font.drawString(title.getFormattedText(), 8, 6, 4210752);
 		font.drawString(playerInventory.getDisplayName().getFormattedText(), 8.0F, ySize - 94, 4210752);
+		blit(guiLeft + 158, guiTop + 68, xSize + (container.getTileEntity().isWorking() ? 32 : 0), 0, 32, 32, 10, 10, 256, 256);
 	}
 	
 	@Override
@@ -83,8 +85,9 @@ public class CobbleGeneratorScreen extends UContainerScreen<CobbleGeneratorConta
 	@Override
 	public void tick() {
 		super.tick();
-		if (slider != null) {
+		if (slider != null && !slider.dragging) {
 			slider.setValue(container.getTileEntity().getAmount());
+			slider.updateSlider();
 		}
 	}
 	

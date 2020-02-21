@@ -15,6 +15,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.*;
+import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -257,6 +258,15 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 	
 	public boolean isWorking() {
 		return working;
+	}
+	
+	// Setter
+	
+	// Client side setter
+	
+	@OnlyIn(Dist.CLIENT)
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 	
 }
