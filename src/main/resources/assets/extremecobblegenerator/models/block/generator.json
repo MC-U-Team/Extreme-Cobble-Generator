@@ -1,5 +1,4 @@
 {
-	"parent": "block/orientable",
 	"ambientocclusion": false,
 	"textures": {
 		"0": "block/iron_block",
