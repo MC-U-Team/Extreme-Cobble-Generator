@@ -4,17 +4,16 @@ import info.u_team.extreme_cobble_generator.config.CommonConfig;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorTileEntityTypes;
 import info.u_team.u_team_core.energy.BasicEnergyStorage;
 import info.u_team.u_team_core.tileentity.UTileEntity;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.Direction;
+import net.minecraft.util.concurrent.TickDelayedTask;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.*;
 
-public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableTileEntity {
+public class CobbleGeneratorTileEntity extends TickableTileEntity {
 	
 	private final int capacity = CommonConfig.getInstance().capacity.get();
 	private final int maxReceive = CommonConfig.getInstance().capacity.get();
@@ -23,11 +22,11 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 	
 	protected final LazyOptional<BasicEnergyStorage> internalEnergyStorageOptional;
 	
+	private LazyOptional<IItemHandler> externalStorage;
+	
 	private boolean powered;
 	
 	private boolean working;
-	
-	private LazyOptional<IItemHandler> externalStorage;
 	
 	private int amount;
 	
@@ -35,12 +34,27 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 		super(ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
 		internalEnergyStorage = new BasicEnergyStorage(capacity, maxReceive, 0, 0);
 		internalEnergyStorageOptional = LazyOptional.of(() -> internalEnergyStorage);
+		externalStorage = LazyOptional.empty();
 	}
 	
 	// Neighbor update
+	
 	public void neighborChanged() {
-		System.out.println("Neightbor update");
-		
+		updateConnections();
+	}
+	
+	// First tick
+	
+	@Override
+	protected void firstTick() {
+		if (!world.isRemote()) {
+			updateConnections();
+		}
+	}
+	
+	// Update connections
+	
+	private void updateConnections() {
 		powered = world.isBlockPowered(pos);
 		final TileEntity tileEntity = world.getTileEntity(getPos().up());
 		if (tileEntity != null) {
@@ -50,32 +64,28 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 	
 	// Update
 	@Override
-	public void tick() {
-		if (world.isRemote()) {
-			return;
-		}
-		
+	public void tickServer() {
 		if (powered && working) {
 			working = false;
 		}
 		
-//		if (!world.isBlockPowered(pos)) {
-//			if (!working) {
-//				if (energy.getEnergyStored() >= amount * multiplier) {
-//					working = true;
-//					markUpdate();
-//				}
-//			}
-//			if (working) {
-//				int extract = energy.extractEnergy(amount * multiplier, true);
-//				if (extract < amount * multiplier) {
-//					working = false;
-//					return;
-//				}
-//				generateCobble();
-//				markUpdate();
-//			}
-//		}
+		// if (!world.isBlockPowered(pos)) {
+		// if (!working) {
+		// if (energy.getEnergyStored() >= amount * multiplier) {
+		// working = true;
+		// markUpdate();
+		// }
+		// }
+		// if (working) {
+		// int extract = energy.extractEnergy(amount * multiplier, true);
+		// if (extract < amount * multiplier) {
+		// working = false;
+		// return;
+		// }
+		// generateCobble();
+		// markUpdate();
+		// }
+		// }
 		
 	}
 	
@@ -109,11 +119,11 @@ public class CobbleGeneratorTileEntity extends UTileEntity implements ITickableT
 	}
 	
 	private boolean addCobbleOutput(IItemHandler handler, int size) {
-//		ItemStack errorstack = ItemHandlerHelper.insertItem(handler, new ItemStack(Blocks.COBBLESTONE, size), false);
-//		energy.extractEnergy((size - errorstack.getCount()) * multiplier, false);
-//		if (!errorstack.isEmpty()) {
-//			return false;
-//		}
+		// ItemStack errorstack = ItemHandlerHelper.insertItem(handler, new ItemStack(Blocks.COBBLESTONE, size), false);
+		// energy.extractEnergy((size - errorstack.getCount()) * multiplier, false);
+		// if (!errorstack.isEmpty()) {
+		// return false;
+		// }
 		return true;
 	}
 	
