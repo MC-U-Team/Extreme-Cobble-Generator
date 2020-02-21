@@ -108,7 +108,10 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 	@Override
 	public void tickServer() {
 		if (powered) {
-			working = false;
+			if (working) {
+				working = false;
+				sendChangesToClient();
+			}
 			return;
 		}
 		
@@ -117,7 +120,10 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 		}
 		
 		if (amount == 0) {
-			working = false;
+			if (working) {
+				working = false;
+				sendChangesToClient();
+			}
 			return;
 		}
 		
@@ -126,10 +132,12 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 				return;
 			}
 			working = true;
+			sendChangesToClient();
 		}
 		
 		if (internalEnergyStorage.getEnergy() < costPerCobble * amount) {
 			working = false;
+			sendChangesToClient();
 			return;
 		}
 		
@@ -141,6 +149,7 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 		for (int i = 0; i < stacks; i++) {
 			if (!addCobbleOutput(storage, 64)) {
 				working = false;
+				sendChangesToClient();
 				return;
 			}
 		}
@@ -148,6 +157,7 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 		if (rest > 0) {
 			if (!addCobbleOutput(storage, rest)) {
 				working = false;
+				sendChangesToClient();
 				return;
 			}
 		}
@@ -214,6 +224,18 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 		internalEnergyStorage.setEnergy(buffer.readInt());
 		working = buffer.readBoolean();
 		amount = buffer.readInt();
+	}
+	
+	// Synced working state
+	
+	@Override
+	public void sendUpdateStateData(CompoundNBT compound) {
+		compound.putBoolean("working", working);
+	}
+	
+	@Override
+	public void handleUpdateStateData(CompoundNBT compound) {
+		working = compound.getBoolean("working");
 	}
 	
 	// Container
