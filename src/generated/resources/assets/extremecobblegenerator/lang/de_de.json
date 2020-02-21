@@ -1,0 +1,9 @@
+{
+	"block.extremecobblegenerator.generator": "Extremer Pflasterstein Generator",
+	"container.extremecobblegenerator.generator": "Pflasterstein Generator",
+	"container.extremecobblegenerator.generator.amount": "Betrag",
+	"container.extremecobblegenerator.generator.description": "Kann %s Kopfsteinpflaster pro Sekunde erzeugen",
+	"container.extremecobblegenerator.generator.idling": "Leerlauf",
+	"container.extremecobblegenerator.generator.working": "Arbeitet",
+	"itemGroup.extremecobblegenerator.group": "Extremer Pflasterstein Generator"
+}
