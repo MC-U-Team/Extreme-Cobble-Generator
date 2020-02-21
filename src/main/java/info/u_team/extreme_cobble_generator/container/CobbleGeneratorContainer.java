@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketBuffer;
 
 public class CobbleGeneratorContainer extends UTileEntityContainer<CobbleGeneratorTileEntity> {
-
+	
 	// Client
 	public CobbleGeneratorContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
 		super(ExtremeCobbleGeneratorContainerTypes.GENERATOR, id, playerInventory, buffer);
@@ -15,56 +15,58 @@ public class CobbleGeneratorContainer extends UTileEntityContainer<CobbleGenerat
 	
 	// Server
 	public CobbleGeneratorContainer(int id, PlayerInventory playerInventory, CobbleGeneratorTileEntity tileEntity) {
-		super(ExtremeCobbleGeneratorContainerTypes.GENERATOR,id, playerInventory, tileEntity);
+		super(ExtremeCobbleGeneratorContainerTypes.GENERATOR, id, playerInventory, tileEntity);
 	}
 	
 	@Override
 	protected void init(boolean server) {
+		appendPlayerInventory(playerInventory, 8, 84);
+		addServerToClientTracker(tileEntity.getEnergyHolder());
+		addServerToClientTracker(tileEntity.getWorkingHolder());
+		addServerToClientTracker(tileEntity.getAmountHolder());
+		addClientToServerTracker(tileEntity.getAmountUpdateHolder());
 	}
-
 	
+	// public ContainerCobbleGenerator(InventoryPlayer inventory, CobbleGeneratorTileEntity generator) {
+	// for (int i = 0; i < 3; ++i) {
+	// for (int j = 0; j < 9; ++j) {
+	// this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+	// }
+	// }
+	//
+	// for (int k = 0; k < 9; ++k) {
+	// this.addSlotToContainer(new Slot(inventory, k, 8 + k * 18, 142));
+	// }
+	// }
 	
-	
-//	public ContainerCobbleGenerator(InventoryPlayer inventory, CobbleGeneratorTileEntity generator) {
-//		for (int i = 0; i < 3; ++i) {
-//			for (int j = 0; j < 9; ++j) {
-//				this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-//			}
-//		}
-//		
-//		for (int k = 0; k < 9; ++k) {
-//			this.addSlotToContainer(new Slot(inventory, k, 8 + k * 18, 142));
-//		}
-//	}
-	
-//	@Override
-//	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
-//		ItemStack newstack = ItemStack.EMPTY;
-//		Slot slot = this.inventorySlots.get(index);
-//		
-//		if (slot != null && slot.getHasStack()) {
-//			ItemStack oldstack = slot.getStack();
-//			newstack = oldstack.copy();
-//			
-//			if (index >= 0 && index < 27) {
-//				if (!this.mergeItemStack(oldstack, 27, 36, false)) {
-//					return ItemStack.EMPTY;
-//				}
-//			} else if (index >= 27 && index < 36 && !this.mergeItemStack(oldstack, 0, 27, false)) {
-//				return ItemStack.EMPTY;
-//			}
-//			
-//			if (oldstack.isEmpty()) {
-//				slot.putStack(ItemStack.EMPTY);
-//			} else {
-//				slot.onSlotChanged();
-//			}
-//			
-//			if (oldstack.getCount() == newstack.getCount()) {
-//				return ItemStack.EMPTY;
-//			}
-//			slot.onTake(player, oldstack);
-//		}
-//		return newstack;
-//	}
+	// @Override
+	// public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+	// ItemStack newstack = ItemStack.EMPTY;
+	// Slot slot = this.inventorySlots.get(index);
+	//
+	// if (slot != null && slot.getHasStack()) {
+	// ItemStack oldstack = slot.getStack();
+	// newstack = oldstack.copy();
+	//
+	// if (index >= 0 && index < 27) {
+	// if (!this.mergeItemStack(oldstack, 27, 36, false)) {
+	// return ItemStack.EMPTY;
+	// }
+	// } else if (index >= 27 && index < 36 && !this.mergeItemStack(oldstack, 0, 27, false)) {
+	// return ItemStack.EMPTY;
+	// }
+	//
+	// if (oldstack.isEmpty()) {
+	// slot.putStack(ItemStack.EMPTY);
+	// } else {
+	// slot.onSlotChanged();
+	// }
+	//
+	// if (oldstack.getCount() == newstack.getCount()) {
+	// return ItemStack.EMPTY;
+	// }
+	// slot.onTake(player, oldstack);
+	// }
+	// return newstack;
+	// }
 }
