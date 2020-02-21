@@ -1,10 +1,9 @@
 {
-	"credit": "Made with Blockbench (The best model maker i have seen so far ;) ~ HyCraftHD)",
 	"parent": "block/orientable",
 	"textures": {
-		"0": "blocks/iron_block",
-		"1": "blocks/glass",
-		"particle": "blocks/iron_block"
+		"0": "block/iron_block",
+		"1": "block/glass",
+		"particle": "block/iron_block"
 	},
 	"elements": [
 		{
@@ -705,7 +704,7 @@
 		3,
 		4,
 		{
-			"name": "Front",
+			"name": "front",
 			"isOpen": true,
 			"shade": true,
 			"display": {
