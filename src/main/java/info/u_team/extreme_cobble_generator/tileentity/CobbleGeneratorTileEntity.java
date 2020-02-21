@@ -3,6 +3,7 @@ package info.u_team.extreme_cobble_generator.tileentity;
 import info.u_team.extreme_cobble_generator.config.CommonConfig;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorTileEntityTypes;
 import info.u_team.u_team_core.energy.BasicEnergyStorage;
+import info.u_team.u_team_core.tileentity.UTickableTileEntity;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -13,7 +14,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.*;
 
-public class CobbleGeneratorTileEntity extends TickableTileEntity {
+public class CobbleGeneratorTileEntity extends UTickableTileEntity {
 	
 	private final int capacity = CommonConfig.getInstance().capacity.get();
 	private final int maxReceive = CommonConfig.getInstance().capacity.get();
@@ -23,6 +24,8 @@ public class CobbleGeneratorTileEntity extends TickableTileEntity {
 	
 	protected final BasicEnergyStorage internalEnergyStorage;
 	
+	private int amount;
+	
 	protected final LazyOptional<BasicEnergyStorage> internalEnergyStorageOptional;
 	
 	private LazyOptional<IItemHandler> externalStorage;
@@ -30,8 +33,6 @@ public class CobbleGeneratorTileEntity extends TickableTileEntity {
 	private boolean powered;
 	
 	private boolean working;
-	
-	private int amount;
 	
 	public CobbleGeneratorTileEntity() {
 		super(ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
@@ -74,6 +75,11 @@ public class CobbleGeneratorTileEntity extends TickableTileEntity {
 		}
 		
 		if (!externalStorage.isPresent()) {
+			return;
+		}
+		
+		if (amount == 0) {
+			working = false;
 			return;
 		}
 		
@@ -129,11 +135,13 @@ public class CobbleGeneratorTileEntity extends TickableTileEntity {
 	@Override
 	public void writeNBT(CompoundNBT compound) {
 		compound.put("energy", internalEnergyStorage.serializeNBT());
+		compound.putInt("amount", amount);
 	}
 	
 	@Override
 	public void readNBT(CompoundNBT compound) {
 		internalEnergyStorage.deserializeNBT(compound.getCompound("energy"));
+		amount = compound.getInt("amount");
 	}
 	
 	@Override
