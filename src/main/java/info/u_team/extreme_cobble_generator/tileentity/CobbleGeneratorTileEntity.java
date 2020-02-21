@@ -1,6 +1,7 @@
 package info.u_team.extreme_cobble_generator.tileentity;
 
 import info.u_team.extreme_cobble_generator.config.CommonConfig;
+import info.u_team.extreme_cobble_generator.container.CobbleGeneratorContainer;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorTileEntityTypes;
 import info.u_team.u_team_core.api.sync.*;
 import info.u_team.u_team_core.energy.*;
@@ -13,7 +14,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.*;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -218,12 +219,12 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 	
 	@Override
 	public ITextComponent getDisplayName() {
-		return null;
+		return new TranslationTextComponent("container.extremecobblegenerator.generator");
 	}
 	
 	@Override
 	public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
-		return null;
+		return new CobbleGeneratorContainer(id, playerInventory, this);
 	}
 	
 	// Getter
