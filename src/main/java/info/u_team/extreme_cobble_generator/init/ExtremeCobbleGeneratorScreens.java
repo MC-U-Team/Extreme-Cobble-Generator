@@ -2,7 +2,7 @@ package info.u_team.extreme_cobble_generator.init;
 
 import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
 import info.u_team.extreme_cobble_generator.screen.CobbleGeneratorScreen;
-import net.minecraft.client.gui.ScreenManager;
+import info.u_team.u_team_core.util.registry.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -14,7 +14,9 @@ public class ExtremeCobbleGeneratorScreens {
 	
 	@SubscribeEvent
 	public static void register(FMLClientSetupEvent event) {
-		ScreenManager.registerFactory(ExtremeCobbleGeneratorContainerTypes.GENERATOR, CobbleGeneratorScreen::new);
+		MainThreadWorker.run(() -> {
+			ClientRegistry.registryScreen(ExtremeCobbleGeneratorContainerTypes.GENERATOR, CobbleGeneratorScreen::new);
+		});
 	}
 	
 }
