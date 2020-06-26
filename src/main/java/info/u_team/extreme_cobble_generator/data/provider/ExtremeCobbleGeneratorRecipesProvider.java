@@ -17,7 +17,7 @@ public class ExtremeCobbleGeneratorRecipesProvider extends CommonRecipesProvider
 	
 	@Override
 	protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-		ShapedRecipeBuilder.shapedRecipe(GENERATOR) //
+		ShapedRecipeBuilder.shapedRecipe(GENERATOR.get()) //
 				.patternLine("IAI") //
 				.patternLine("IGI") //
 				.patternLine("BCB") //

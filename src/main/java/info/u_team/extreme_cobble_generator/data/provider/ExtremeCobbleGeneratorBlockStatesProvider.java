@@ -12,7 +12,7 @@ public class ExtremeCobbleGeneratorBlockStatesProvider extends CommonBlockStates
 	
 	@Override
 	protected void registerStatesAndModels() {
-		horizontalBlock(GENERATOR, models().getExistingFile(modLoc(getPath(GENERATOR))));
+		horizontalBlock(GENERATOR.get(), models().getExistingFile(modLoc(getPath(GENERATOR.get()))));
 	}
 	
 }

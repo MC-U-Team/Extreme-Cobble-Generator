@@ -16,7 +16,7 @@ public class ExtremeCobbleGeneratorLanguagesProvider extends CommonLanguagesProv
 		// English
 		
 		add(GROUP, "Extreme Cobblestone Generator");
-		add(GENERATOR, "Extreme Cobblestone Generator");
+		addBlock(GENERATOR, "Extreme Cobblestone Generator");
 		add("container.extremecobblegenerator.generator", "Cobblestone Generator");
 		add("container.extremecobblegenerator.generator.amount", "Amount");
 		add("container.extremecobblegenerator.generator.description", "Can generate %s cobble per second");
@@ -25,7 +25,7 @@ public class ExtremeCobbleGeneratorLanguagesProvider extends CommonLanguagesProv
 		
 		// German
 		add("de_de", GROUP, "Extremer Pflasterstein Generator");
-		add("de_de", GENERATOR, "Extremer Pflasterstein Generator");
+		addBlock("de_de", GENERATOR, "Extremer Pflasterstein Generator");
 		add("de_de", "container.extremecobblegenerator.generator", "Pflasterstein Generator");
 		add("de_de", "container.extremecobblegenerator.generator.amount", "Betrag");
 		add("de_de", "container.extremecobblegenerator.generator.description", "Kann %s Kopfsteinpflaster pro Sekunde erzeugen");

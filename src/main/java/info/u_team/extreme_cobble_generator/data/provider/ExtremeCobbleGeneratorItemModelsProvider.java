@@ -12,7 +12,7 @@ public class ExtremeCobbleGeneratorItemModelsProvider extends CommonItemModelsPr
 	
 	@Override
 	protected void registerModels() {
-		simpleBlock(GENERATOR);
+		simpleBlock(GENERATOR.get());
 	}
 	
 }
