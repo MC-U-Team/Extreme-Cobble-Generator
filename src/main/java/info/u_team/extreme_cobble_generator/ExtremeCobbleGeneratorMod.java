@@ -1,6 +1,8 @@
 package info.u_team.extreme_cobble_generator;
 
 import info.u_team.extreme_cobble_generator.config.CommonConfig;
+import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBlocks;
+import info.u_team.u_team_core.util.registry.BusRegister;
 import info.u_team.u_team_core.util.verify.JarSignVerifier;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -14,5 +16,10 @@ public class ExtremeCobbleGeneratorMod {
 	public ExtremeCobbleGeneratorMod() {
 		JarSignVerifier.checkSigned(MODID);
 		ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.CONFIG);
+		register();
+	}
+	
+	private void register() {
+		BusRegister.registerMod(ExtremeCobbleGeneratorBlocks::register);
 	}
 }
