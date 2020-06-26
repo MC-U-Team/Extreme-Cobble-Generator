@@ -12,12 +12,12 @@ public class CobbleGeneratorContainer extends UTileEntityContainer<CobbleGenerat
 	
 	// Client
 	public CobbleGeneratorContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-		super(ExtremeCobbleGeneratorContainerTypes.GENERATOR, id, playerInventory, buffer);
+		super(ExtremeCobbleGeneratorContainerTypes.GENERATOR.get(), id, playerInventory, buffer);
 	}
 	
 	// Server
 	public CobbleGeneratorContainer(int id, PlayerInventory playerInventory, CobbleGeneratorTileEntity tileEntity) {
-		super(ExtremeCobbleGeneratorContainerTypes.GENERATOR, id, playerInventory, tileEntity);
+		super(ExtremeCobbleGeneratorContainerTypes.GENERATOR.get(), id, playerInventory, tileEntity);
 	}
 	
 	@Override

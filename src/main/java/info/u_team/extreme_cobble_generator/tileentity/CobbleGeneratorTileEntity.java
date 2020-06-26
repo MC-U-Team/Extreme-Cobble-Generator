@@ -58,7 +58,7 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 	private final MessageHolder amountUpdateMessage;
 	
 	public CobbleGeneratorTileEntity() {
-		super(ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
+		super(ExtremeCobbleGeneratorTileEntityTypes.GENERATOR.get());
 		internalEnergyStorage = new BasicEnergyStorage(capacity, maxReceive, maxReceive, 0) {
 			
 			@Override
