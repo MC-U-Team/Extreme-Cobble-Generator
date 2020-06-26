@@ -1,7 +1,7 @@
 package info.u_team.extreme_cobble_generator;
 
 import info.u_team.extreme_cobble_generator.config.CommonConfig;
-import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBlocks;
+import info.u_team.extreme_cobble_generator.init.*;
 import info.u_team.u_team_core.util.registry.BusRegister;
 import info.u_team.u_team_core.util.verify.JarSignVerifier;
 import net.minecraftforge.fml.ModLoadingContext;
