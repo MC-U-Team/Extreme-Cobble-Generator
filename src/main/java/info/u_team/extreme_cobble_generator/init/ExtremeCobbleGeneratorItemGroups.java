@@ -6,6 +6,6 @@ import net.minecraft.item.ItemGroup;
 
 public class ExtremeCobbleGeneratorItemGroups {
 	
-	public static final ItemGroup GROUP = new UItemGroup(ExtremeCobbleGeneratorMod.MODID, "group", () -> ExtremeCobbleGeneratorBlocks.GENERATOR);
+	public static final ItemGroup GROUP = new UItemGroup(ExtremeCobbleGeneratorMod.MODID, "group", ExtremeCobbleGeneratorBlocks.GENERATOR);
 	
 }
