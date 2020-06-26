@@ -18,7 +18,7 @@ public class ExtremeCobbleGeneratorRenderTypes {
 		// Cutout
 		final RenderType cutout = RenderType.getCutout();
 		
-		RenderTypeLookup.setRenderLayer(GENERATOR, cutout);
+		RenderTypeLookup.setRenderLayer(GENERATOR.get(), cutout);
 	}
 	
 }
