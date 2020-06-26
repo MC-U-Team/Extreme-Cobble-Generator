@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.*;
 import net.minecraft.item.*;
 
-@SuppressWarnings("deprecation")
 public class CobbleGeneratorTileEntityRenderer extends TileEntityRenderer<CobbleGeneratorTileEntity> {
 	
 	public CobbleGeneratorTileEntityRenderer(TileEntityRendererDispatcher rendererDispatcher) {
