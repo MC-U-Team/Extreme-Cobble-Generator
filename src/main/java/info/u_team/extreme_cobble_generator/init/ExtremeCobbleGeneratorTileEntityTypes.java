@@ -2,22 +2,19 @@ package info.u_team.extreme_cobble_generator.init;
 
 import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
 import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
-import info.u_team.u_team_core.tileentitytype.UTileEntityType.UBuilder;
-import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
+import info.u_team.u_team_core.util.registry.TileEntityTypeDeferredRegister;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.RegistryObject;
 
-@EventBusSubscriber(modid = ExtremeCobbleGeneratorMod.MODID, bus = Bus.MOD)
 public class ExtremeCobbleGeneratorTileEntityTypes {
 	
-	public static final TileEntityType<CobbleGeneratorTileEntity> GENERATOR = UBuilder.create("generator", CobbleGeneratorTileEntity::new, ExtremeCobbleGeneratorBlocks.GENERATOR).build();
+	public static final TileEntityTypeDeferredRegister TILE_ENTITY_TYPES = TileEntityTypeDeferredRegister.create(ExtremeCobbleGeneratorMod.MODID);
 	
-	@SubscribeEvent
-	public static void register(Register<TileEntityType<?>> event) {
-		BaseRegistryUtil.getAllGenericRegistryEntriesAndApplyNames(ExtremeCobbleGeneratorMod.MODID, TileEntityType.class).forEach(event.getRegistry()::register);
+	public static final RegistryObject<TileEntityType<CobbleGeneratorTileEntity>> GENERATOR = TILE_ENTITY_TYPES.register("generator", () -> TileEntityType.Builder.create(CobbleGeneratorTileEntity::new, ExtremeCobbleGeneratorBlocks.GENERATOR.get()));
+	
+	public static void register(IEventBus bus) {
+		TILE_ENTITY_TYPES.register(bus);
 	}
 	
 }

@@ -22,5 +22,6 @@ public class ExtremeCobbleGeneratorMod {
 	private void register() {
 		BusRegister.registerMod(ExtremeCobbleGeneratorBlocks::register);
 		BusRegister.registerMod(ExtremeCobbleGeneratorContainerTypes::register);
+		BusRegister.registerMod(ExtremeCobbleGeneratorTileEntityTypes::register);
 	}
 }
