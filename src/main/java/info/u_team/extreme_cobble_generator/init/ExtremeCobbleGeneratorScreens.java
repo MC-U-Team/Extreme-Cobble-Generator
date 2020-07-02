@@ -15,7 +15,7 @@ public class ExtremeCobbleGeneratorScreens {
 	@SubscribeEvent
 	public static void register(FMLClientSetupEvent event) {
 		MainThreadWorker.run(() -> {
-			ClientRegistry.registryScreen(ExtremeCobbleGeneratorContainerTypes.GENERATOR, CobbleGeneratorScreen::new);
+			ClientRegistry.registerScreen(ExtremeCobbleGeneratorContainerTypes.GENERATOR, CobbleGeneratorScreen::new);
 		});
 	}
 	
