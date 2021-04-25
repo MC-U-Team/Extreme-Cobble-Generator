@@ -3,7 +3,8 @@ package info.u_team.extreme_cobble_generator.data.provider;
 import static info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBlocks.GENERATOR;
 import static info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorItemGroups.GROUP;
 
-import info.u_team.u_team_core.data.*;
+import info.u_team.u_team_core.data.CommonLanguagesProvider;
+import info.u_team.u_team_core.data.GenerationData;
 
 public class ExtremeCobbleGeneratorLanguagesProvider extends CommonLanguagesProvider {
 	

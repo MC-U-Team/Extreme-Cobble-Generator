@@ -3,15 +3,16 @@ package info.u_team.extreme_cobble_generator.screen;
 import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
 import info.u_team.extreme_cobble_generator.container.CobbleGeneratorContainer;
 import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
-import info.u_team.u_team_core.gui.UContainerScreen;
-import info.u_team.u_team_core.gui.elements.*;
+import info.u_team.u_team_core.gui.elements.EnergyStorageWidget;
+import info.u_team.u_team_core.screen.UContainerScreen;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.api.distmarker.*;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class CobbleGeneratorScreen extends UContainerScreen<CobbleGeneratorContainer> {

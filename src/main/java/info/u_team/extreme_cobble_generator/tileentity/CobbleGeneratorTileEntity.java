@@ -3,23 +3,31 @@ package info.u_team.extreme_cobble_generator.tileentity;
 import info.u_team.extreme_cobble_generator.config.CommonConfig;
 import info.u_team.extreme_cobble_generator.container.CobbleGeneratorContainer;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorTileEntityTypes;
-import info.u_team.u_team_core.api.sync.*;
-import info.u_team.u_team_core.energy.*;
+import info.u_team.u_team_core.api.sync.BufferReferenceHolder;
+import info.u_team.u_team_core.api.sync.IInitSyncedTileEntity;
+import info.u_team.u_team_core.api.sync.MessageHolder;
+import info.u_team.u_team_core.energy.BasicEnergyAcceptorDelegate;
+import info.u_team.u_team_core.energy.BasicEnergyStorage;
 import info.u_team.u_team_core.tileentity.UTickableTileEntity;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.text.*;
-import net.minecraftforge.api.distmarker.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.items.*;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class CobbleGeneratorTileEntity extends UTickableTileEntity implements IInitSyncedTileEntity {
 	

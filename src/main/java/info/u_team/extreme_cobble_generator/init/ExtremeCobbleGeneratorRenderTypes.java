@@ -1,9 +1,10 @@
 package info.u_team.extreme_cobble_generator.init;
 
-import static info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBlocks.*;
+import static info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBlocks.GENERATOR;
 
 import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;

@@ -1,15 +1,18 @@
 package info.u_team.extreme_cobble_generator.loot;
 
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonObject;
 
 import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootFunction;
+import net.minecraft.loot.LootParameters;
+import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.*;
-import net.minecraft.world.storage.loot.conditions.ILootCondition;
 
 public class SetTileEntityNBT extends LootFunction {
 	

@@ -5,10 +5,16 @@ import static info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBl
 import java.util.function.BiConsumer;
 
 import info.u_team.extreme_cobble_generator.loot.SetTileEntityNBT;
-import info.u_team.u_team_core.data.*;
-import net.minecraft.util.*;
-import net.minecraft.world.storage.loot.*;
-import net.minecraft.world.storage.loot.conditions.SurvivesExplosion;
+import info.u_team.u_team_core.data.CommonLootTablesProvider;
+import info.u_team.u_team_core.data.GenerationData;
+import net.minecraft.loot.ConstantRange;
+import net.minecraft.loot.ItemLootEntry;
+import net.minecraft.loot.LootParameterSets;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.conditions.SurvivesExplosion;
+import net.minecraft.util.IItemProvider;
+import net.minecraft.util.ResourceLocation;
 
 public class ExtremeCobbleGeneratorLootTablesProvider extends CommonLootTablesProvider {
 	

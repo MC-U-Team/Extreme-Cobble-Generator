@@ -4,8 +4,10 @@ import static info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBl
 
 import java.util.function.Consumer;
 
-import info.u_team.u_team_core.data.*;
-import net.minecraft.data.*;
+import info.u_team.u_team_core.data.CommonRecipesProvider;
+import info.u_team.u_team_core.data.GenerationData;
+import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Items;
 import net.minecraftforge.common.Tags;
 
