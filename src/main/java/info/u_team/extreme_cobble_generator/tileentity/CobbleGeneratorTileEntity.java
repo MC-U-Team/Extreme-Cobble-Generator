@@ -9,6 +9,7 @@ import info.u_team.u_team_core.api.sync.MessageHolder;
 import info.u_team.u_team_core.energy.BasicEnergyAcceptorDelegate;
 import info.u_team.u_team_core.energy.BasicEnergyStorage;
 import info.u_team.u_team_core.tileentity.UTickableTileEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -197,7 +198,7 @@ public class CobbleGeneratorTileEntity extends UTickableTileEntity implements II
 	}
 	
 	@Override
-	public void readNBT(CompoundNBT compound) {
+	public void readNBT(BlockState state, CompoundNBT compound) {
 		internalEnergyStorage.deserializeNBT(compound.getCompound("energy"));
 		amount = compound.getInt("amount");
 	}
