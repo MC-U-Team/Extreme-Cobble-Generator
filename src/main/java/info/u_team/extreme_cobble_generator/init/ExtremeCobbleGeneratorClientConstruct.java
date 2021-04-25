@@ -11,6 +11,8 @@ public class ExtremeCobbleGeneratorClientConstruct implements IModConstruct {
 	@Override
 	public void construct() {
 		BusRegister.registerMod(ExtremeCobbleGeneratorRenderTypes::registerMod);
+		BusRegister.registerMod(ExtremeCobbleGeneratorScreens::registerMod);
+		BusRegister.registerMod(ExtremeCobbleGeneratorTileEntityRenderers::registerMod);
 	}
 	
 }
