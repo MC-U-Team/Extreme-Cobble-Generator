@@ -93,6 +93,14 @@ public class CobbleGeneratorScreen extends UBasicContainerScreen<CobbleGenerator
 	}
 	
 	@Override
+	public void closeScreen() {
+		super.closeScreen();
+		if (slider != null && slider.dragging) {
+			sendUpdateMessage(slider.getValueInt());
+		}
+	}
+	
+	@Override
 	public void tick() {
 		super.tick();
 		if (slider != null && !slider.dragging) {
