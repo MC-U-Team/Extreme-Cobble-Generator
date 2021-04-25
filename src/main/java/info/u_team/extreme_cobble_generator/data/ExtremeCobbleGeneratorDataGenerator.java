@@ -18,14 +18,14 @@ public class ExtremeCobbleGeneratorDataGenerator {
 	@SubscribeEvent
 	public static void data(GatherDataEvent event) {
 		final GenerationData data = new GenerationData(ExtremeCobbleGeneratorMod.MODID, event);
+		if (event.includeServer()) {
+			data.addProvider(ExtremeCobbleGeneratorLootTablesProvider::new);
+			data.addProvider(ExtremeCobbleGeneratorRecipesProvider::new);
+		}
 		if (event.includeClient()) {
 			data.addProvider(ExtremeCobbleGeneratorBlockStatesProvider::new);
 			data.addProvider(ExtremeCobbleGeneratorItemModelsProvider::new);
 			data.addProvider(ExtremeCobbleGeneratorLanguagesProvider::new);
-		}
-		if (event.includeServer()) {
-			data.addProvider(ExtremeCobbleGeneratorLootTablesProvider::new);
-			data.addProvider(ExtremeCobbleGeneratorRecipesProvider::new);
 		}
 	}
 	
