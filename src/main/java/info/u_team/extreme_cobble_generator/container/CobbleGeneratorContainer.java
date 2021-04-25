@@ -33,10 +33,10 @@ public class CobbleGeneratorContainer extends UTileEntityContainer<CobbleGenerat
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
 		ItemStack newstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
+		final Slot slot = this.inventorySlots.get(index);
 		
 		if (slot != null && slot.getHasStack()) {
-			ItemStack oldstack = slot.getStack();
+			final ItemStack oldstack = slot.getStack();
 			newstack = oldstack.copy();
 			
 			if (index >= 0 && index < 27) {
