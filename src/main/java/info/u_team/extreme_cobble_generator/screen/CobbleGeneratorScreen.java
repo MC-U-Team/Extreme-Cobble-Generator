@@ -9,6 +9,7 @@ import info.u_team.u_team_core.gui.elements.EnergyStorageWidget;
 import info.u_team.u_team_core.gui.elements.ScalableButton;
 import info.u_team.u_team_core.gui.elements.ScalableSlider;
 import info.u_team.u_team_core.screen.UBasicContainerScreen;
+import info.u_team.u_team_core.util.WidgetUtil;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerInventory;
@@ -25,10 +26,16 @@ public class CobbleGeneratorScreen extends UBasicContainerScreen<CobbleGenerator
 	
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(ExtremeCobbleGeneratorMod.MODID, "textures/gui/cobblegenerator.png");
 	
+	private final ITextComponent plusTextComponent;
+	private final ITextComponent minusTextComponent;
+	
 	private ScalableSlider slider;
 	
 	public CobbleGeneratorScreen(CobbleGeneratorContainer container, PlayerInventory playerInventory, ITextComponent title) {
 		super(container, playerInventory, title, BACKGROUND, 176, 173);
+		
+		plusTextComponent = new StringTextComponent("+");
+		minusTextComponent = new StringTextComponent("-");
 	}
 	
 	@Override
@@ -39,12 +46,13 @@ public class CobbleGeneratorScreen extends UBasicContainerScreen<CobbleGenerator
 		
 		addButton(new EnergyStorageWidget(guiLeft + 9, guiTop + 20, 54, () -> tileEntity.getInternalEnergyStorage()));
 		
-		addButton(new ScalableButton(guiLeft + 36, guiTop + 20, 15, 15, new StringTextComponent("+"), 0.75F, button -> sendUpdateAddValueMessage(100)));
-		addButton(new ScalableButton(guiLeft + 56, guiTop + 20, 15, 15, new StringTextComponent("+"), 0.75F, button -> sendUpdateAddValueMessage(10)));
-		addButton(new ScalableButton(guiLeft + 76, guiTop + 20, 15, 15, new StringTextComponent("+"), 0.75F, button -> sendUpdateAddValueMessage(1)));
-		addButton(new ScalableButton(guiLeft + 101, guiTop + 20, 15, 15, new StringTextComponent("-"), 0.75F, button -> sendUpdateAddValueMessage(-1)));
-		addButton(new ScalableButton(guiLeft + 121, guiTop + 20, 15, 15, new StringTextComponent("-"), 0.75F, button -> sendUpdateAddValueMessage(-10)));
-		addButton(new ScalableButton(guiLeft + 141, guiTop + 20, 15, 15, new StringTextComponent("-"), 0.75F, button -> sendUpdateAddValueMessage(-100)));
+		addButton(createAdjustButton(guiLeft + 36, guiTop + 20, plusTextComponent, 100));
+		addButton(createAdjustButton(guiLeft + 56, guiTop + 20, plusTextComponent, 10));
+		addButton(createAdjustButton(guiLeft + 76, guiTop + 20, plusTextComponent, 1));
+		
+		addButton(createAdjustButton(guiLeft + 101, guiTop + 20, plusTextComponent, -1));
+		addButton(createAdjustButton(guiLeft + 121, guiTop + 20, plusTextComponent, -10));
+		addButton(createAdjustButton(guiLeft + 141, guiTop + 20, plusTextComponent, -100));
 		
 		slider = addButton(new ScalableSlider(guiLeft + 36, guiTop + 40, 120, 15, new TranslationTextComponent("container.extremecobblegenerator.generator.amount").appendString(": "), new StringTextComponent(""), 0, tileEntity.maxGeneration, tileEntity.getAmount(), false, true, true, 0.75F) {
 			
@@ -52,6 +60,14 @@ public class CobbleGeneratorScreen extends UBasicContainerScreen<CobbleGenerator
 			public void onRelease(double mouseX, double mouseY) {
 				super.onRelease(mouseX, mouseY);
 				sendUpdateMessage(slider.getValueInt());
+			}
+		});
+	}
+	
+	private ScalableButton createAdjustButton(int x, int y, ITextComponent component, int value) {
+		return new ScalableButton(x, y, 15, 15, component, 0.75F, button -> sendUpdateAddValueMessage(value), (button, matrixStack, mouseX, mouseY) -> {
+			if (WidgetUtil.isHovered(button)) {
+				renderTooltip(matrixStack, component.copyRaw().appendString(Integer.toString(Math.abs(value))), mouseX, mouseY);
 			}
 		});
 	}
