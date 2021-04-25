@@ -50,9 +50,9 @@ public class CobbleGeneratorScreen extends UBasicContainerScreen<CobbleGenerator
 		addButton(createAdjustButton(guiLeft + 56, guiTop + 20, plusTextComponent, 10));
 		addButton(createAdjustButton(guiLeft + 76, guiTop + 20, plusTextComponent, 1));
 		
-		addButton(createAdjustButton(guiLeft + 101, guiTop + 20, plusTextComponent, -1));
-		addButton(createAdjustButton(guiLeft + 121, guiTop + 20, plusTextComponent, -10));
-		addButton(createAdjustButton(guiLeft + 141, guiTop + 20, plusTextComponent, -100));
+		addButton(createAdjustButton(guiLeft + 101, guiTop + 20, minusTextComponent, -1));
+		addButton(createAdjustButton(guiLeft + 121, guiTop + 20, minusTextComponent, -10));
+		addButton(createAdjustButton(guiLeft + 141, guiTop + 20, minusTextComponent, -100));
 		
 		slider = addButton(new ScalableSlider(guiLeft + 36, guiTop + 40, 120, 15, new TranslationTextComponent("container.extremecobblegenerator.generator.amount").appendString(": "), new StringTextComponent(""), 0, tileEntity.maxGeneration, tileEntity.getAmount(), false, true, true, 0.75F) {
 			
