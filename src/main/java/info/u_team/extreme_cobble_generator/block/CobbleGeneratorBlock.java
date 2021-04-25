@@ -26,7 +26,7 @@ public class CobbleGeneratorBlock extends UTileEntityBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	
 	public CobbleGeneratorBlock() {
-		super(ExtremeCobbleGeneratorItemGroups.GROUP, Properties.create(Material.IRON).doesNotBlockMovement().hardnessAndResistance(2.0F), ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
+		super(ExtremeCobbleGeneratorItemGroups.GROUP, Properties.create(Material.IRON).notSolid().hardnessAndResistance(4), ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
 		this.setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
 	}
 	
