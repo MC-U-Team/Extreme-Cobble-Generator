@@ -13,7 +13,7 @@ public class ExtremeCobbleGeneratorBlocks {
 	
 	public static final BlockRegistryObject<CobbleGeneratorBlock, BlockItem> GENERATOR = BLOCKS.register("generator", CobbleGeneratorBlock::new);
 	
-	public static void register(IEventBus bus) {
+	public static void registerMod(IEventBus bus) {
 		BLOCKS.register(bus);
 	}
 	

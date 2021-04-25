@@ -15,9 +15,9 @@ public class ExtremeCobbleGeneratorCommonConstruct implements IModConstruct {
 	public void construct() {
 		ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.CONFIG);
 		
-		BusRegister.registerMod(ExtremeCobbleGeneratorBlocks::register);
-		BusRegister.registerMod(ExtremeCobbleGeneratorContainerTypes::register);
-		BusRegister.registerMod(ExtremeCobbleGeneratorTileEntityTypes::register);
+		BusRegister.registerMod(ExtremeCobbleGeneratorBlocks::registerMod);
+		BusRegister.registerMod(ExtremeCobbleGeneratorContainerTypes::registerMod);
+		BusRegister.registerMod(ExtremeCobbleGeneratorTileEntityTypes::registerMod);
 	}
 	
 }

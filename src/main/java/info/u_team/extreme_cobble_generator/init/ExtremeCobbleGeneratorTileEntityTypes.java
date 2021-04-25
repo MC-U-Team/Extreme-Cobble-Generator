@@ -13,7 +13,7 @@ public class ExtremeCobbleGeneratorTileEntityTypes {
 	
 	public static final RegistryObject<TileEntityType<CobbleGeneratorTileEntity>> GENERATOR = TILE_ENTITY_TYPES.register("generator", () -> TileEntityType.Builder.create(CobbleGeneratorTileEntity::new, ExtremeCobbleGeneratorBlocks.GENERATOR.get()));
 	
-	public static void register(IEventBus bus) {
+	public static void registerMod(IEventBus bus) {
 		TILE_ENTITY_TYPES.register(bus);
 	}
 	

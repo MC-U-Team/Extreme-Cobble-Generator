@@ -15,7 +15,7 @@ public class ExtremeCobbleGeneratorContainerTypes {
 	
 	public static final RegistryObject<ContainerType<CobbleGeneratorContainer>> GENERATOR = CONTAINER_TYPES.register("generator", () -> new UContainerType<CobbleGeneratorContainer>(CobbleGeneratorContainer::new));
 	
-	public static void register(IEventBus bus) {
+	public static void registerMod(IEventBus bus) {
 		CONTAINER_TYPES.register(bus);
 	}
 	
