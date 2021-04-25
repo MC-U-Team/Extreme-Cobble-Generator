@@ -59,6 +59,7 @@ public class CobbleGeneratorBlock extends UTileEntityBlock {
 		return state.with(FACING, rotation.rotate(state.get(FACING)));
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirror) {
 		return state.rotate(mirror.toRotation(state.get(FACING)));
