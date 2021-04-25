@@ -28,6 +28,9 @@ public class CobbleGeneratorScreen extends UBasicContainerScreen<CobbleGenerator
 	
 	private final ITextComponent plusTextComponent;
 	private final ITextComponent minusTextComponent;
+	private final ITextComponent amountTextComponent;
+	private final ITextComponent workingTextComponent;
+	private final ITextComponent idlingTextComponent;
 	
 	private ScalableSlider slider;
 	
@@ -36,6 +39,9 @@ public class CobbleGeneratorScreen extends UBasicContainerScreen<CobbleGenerator
 		
 		plusTextComponent = new StringTextComponent("+");
 		minusTextComponent = new StringTextComponent("-");
+		amountTextComponent = new TranslationTextComponent("container.extremecobblegenerator.generator.amount").appendString(": ");
+		workingTextComponent = new TranslationTextComponent("container.extremecobblegenerator.generator.working");
+		idlingTextComponent = new TranslationTextComponent("container.extremecobblegenerator.generator.idling");
 	}
 	
 	@Override
@@ -54,7 +60,7 @@ public class CobbleGeneratorScreen extends UBasicContainerScreen<CobbleGenerator
 		addButton(createAdjustButton(guiLeft + 121, guiTop + 20, minusTextComponent, -10));
 		addButton(createAdjustButton(guiLeft + 141, guiTop + 20, minusTextComponent, -100));
 		
-		slider = addButton(new ScalableSlider(guiLeft + 36, guiTop + 40, 120, 15, new TranslationTextComponent("container.extremecobblegenerator.generator.amount").appendString(": "), new StringTextComponent(""), 0, tileEntity.maxGeneration, tileEntity.getAmount(), false, true, true, 0.75F) {
+		slider = addButton(new ScalableSlider(guiLeft + 36, guiTop + 40, 120, 15, amountTextComponent, StringTextComponent.EMPTY, 0, tileEntity.maxGeneration, tileEntity.getAmount(), false, true, true, 0.75F) {
 			
 			@Override
 			public void onRelease(double mouseX, double mouseY) {
@@ -96,7 +102,7 @@ public class CobbleGeneratorScreen extends UBasicContainerScreen<CobbleGenerator
 	public void renderToolTip(MatrixStack matrixStack, Minecraft minecraft, int mouseX, int mouseY, float partialTicks) {
 		super.renderToolTip(matrixStack, minecraft, mouseX, mouseY, partialTicks);
 		if (isPointInRegion(154, 74, 12, 12, mouseX, mouseY)) {
-			renderTooltip(matrixStack, container.getTileEntity().isWorking() ? new TranslationTextComponent("container.extremecobblegenerator.generator.working") : new TranslationTextComponent("container.extremecobblegenerator.generator.idling"), mouseX, mouseY);
+			renderTooltip(matrixStack, container.getTileEntity().isWorking() ? workingTextComponent : idlingTextComponent, mouseX, mouseY);
 		}
 	}
 	
