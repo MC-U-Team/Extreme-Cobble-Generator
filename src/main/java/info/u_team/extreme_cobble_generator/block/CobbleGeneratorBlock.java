@@ -1,72 +1,83 @@
 package info.u_team.extreme_cobble_generator.block;
 
-import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorItemGroups;
+import info.u_team.extreme_cobble_generator.blockentity.CobbleGeneratorBlockEntity;
+import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorCreativeTabs;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorTileEntityTypes;
-import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
-import info.u_team.u_team_core.block.UTileEntityBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
+import info.u_team.u_team_core.block.UEntityBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
 
-public class CobbleGeneratorBlock extends UTileEntityBlock {
+public class CobbleGeneratorBlock extends UEntityBlock {
 	
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	
 	public CobbleGeneratorBlock() {
-		super(ExtremeCobbleGeneratorItemGroups.GROUP, Properties.create(Material.IRON).notSolid().hardnessAndResistance(4), ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
-		this.setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
+		super(ExtremeCobbleGeneratorCreativeTabs.TAB, Properties.of(Material.METAL).noOcclusion().strength(4), ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
+		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
+	}
+	
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+		if ((type != tileEntityType.get()) || level.isClientSide()) {
+			return null;
+		}
+		return (level_, pos, state_, instance) -> CobbleGeneratorBlockEntity.serverTick(level_, pos, state_, (CobbleGeneratorBlockEntity) instance);
 	}
 	
 	// Trigger generator for production stop / start
 	
 	@Override
-	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-		if (world.isRemote) {
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+		if (level.isClientSide()) {
 			return;
 		}
-		isTileEntityFromType(world, pos).map(CobbleGeneratorTileEntity.class::cast).ifPresent(CobbleGeneratorTileEntity::neighborChanged);
+		getBlockEntity(level, pos).map(CobbleGeneratorBlockEntity.class::cast).ifPresent(CobbleGeneratorBlockEntity::neighborChanged);
 	}
 	
 	// Open gui
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult result) {
-		return openContainer(world, pos, player, true);
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		return openMenu(level, pos, player, true);
 	}
 	
 	// Facing stuff
 	
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 	
 	@Override
 	public BlockState rotate(BlockState state, Rotation rotation) {
-		return state.with(FACING, rotation.rotate(state.get(FACING)));
+		return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
 	}
 	
 	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirror) {
-		return state.rotate(mirror.toRotation(state.get(FACING)));
+		return state.rotate(mirror.getRotation(state.getValue(FACING)));
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(FACING);
 	}
 }

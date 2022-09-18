@@ -2,7 +2,7 @@ package info.u_team.extreme_cobble_generator.render.tileentity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
+import info.u_team.extreme_cobble_generator.blockentity.CobbleGeneratorBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
@@ -12,14 +12,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.vector.Vector3f;
 
-public class CobbleGeneratorTileEntityRenderer extends TileEntityRenderer<CobbleGeneratorTileEntity> {
+public class CobbleGeneratorTileEntityRenderer extends TileEntityRenderer<CobbleGeneratorBlockEntity> {
 	
 	public CobbleGeneratorTileEntityRenderer(TileEntityRendererDispatcher rendererDispatcher) {
 		super(rendererDispatcher);
 	}
 	
 	@Override
-	public void render(CobbleGeneratorTileEntity tileEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+	public void render(CobbleGeneratorBlockEntity tileEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
 		if (!tileEntity.isWorking()) {
 			return;
 		}

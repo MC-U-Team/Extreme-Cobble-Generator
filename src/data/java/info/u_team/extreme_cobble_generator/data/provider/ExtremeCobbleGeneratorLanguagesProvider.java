@@ -1,7 +1,7 @@
 package info.u_team.extreme_cobble_generator.data.provider;
 
 import static info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBlocks.GENERATOR;
-import static info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorItemGroups.GROUP;
+import static info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorCreativeTabs.TAB;
 
 import info.u_team.u_team_core.data.CommonLanguagesProvider;
 import info.u_team.u_team_core.data.GenerationData;
@@ -16,7 +16,7 @@ public class ExtremeCobbleGeneratorLanguagesProvider extends CommonLanguagesProv
 	public void addTranslations() {
 		// English
 		
-		add(GROUP, "Extreme Cobblestone Generator");
+		add(TAB, "Extreme Cobblestone Generator");
 		addBlock(GENERATOR, "Extreme Cobblestone Generator");
 		add("container.extremecobblegenerator.generator", "Cobblestone Generator");
 		add("container.extremecobblegenerator.generator.amount", "Amount");
@@ -25,7 +25,7 @@ public class ExtremeCobbleGeneratorLanguagesProvider extends CommonLanguagesProv
 		add("container.extremecobblegenerator.generator.idling", "Idling");
 		
 		// German
-		add("de_de", GROUP, "Extremer Pflasterstein Generator");
+		add("de_de", TAB, "Extremer Pflasterstein Generator");
 		addBlock("de_de", GENERATOR, "Extremer Pflasterstein Generator");
 		add("de_de", "container.extremecobblegenerator.generator", "Pflasterstein Generator");
 		add("de_de", "container.extremecobblegenerator.generator.amount", "Betrag");

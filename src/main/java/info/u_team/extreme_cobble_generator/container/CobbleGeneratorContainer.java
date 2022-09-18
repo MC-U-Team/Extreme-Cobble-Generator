@@ -1,7 +1,7 @@
 package info.u_team.extreme_cobble_generator.container;
 
+import info.u_team.extreme_cobble_generator.blockentity.CobbleGeneratorBlockEntity;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorContainerTypes;
-import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
 import info.u_team.u_team_core.container.UTileEntityContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -9,7 +9,7 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 
-public class CobbleGeneratorContainer extends UTileEntityContainer<CobbleGeneratorTileEntity> {
+public class CobbleGeneratorContainer extends UTileEntityContainer<CobbleGeneratorBlockEntity> {
 	
 	// Client
 	public CobbleGeneratorContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
@@ -17,7 +17,7 @@ public class CobbleGeneratorContainer extends UTileEntityContainer<CobbleGenerat
 	}
 	
 	// Server
-	public CobbleGeneratorContainer(int id, PlayerInventory playerInventory, CobbleGeneratorTileEntity tileEntity) {
+	public CobbleGeneratorContainer(int id, PlayerInventory playerInventory, CobbleGeneratorBlockEntity tileEntity) {
 		super(ExtremeCobbleGeneratorContainerTypes.GENERATOR.get(), id, playerInventory, tileEntity);
 	}
 	

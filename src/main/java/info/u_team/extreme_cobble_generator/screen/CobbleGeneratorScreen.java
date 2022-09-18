@@ -3,8 +3,8 @@ package info.u_team.extreme_cobble_generator.screen;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
+import info.u_team.extreme_cobble_generator.blockentity.CobbleGeneratorBlockEntity;
 import info.u_team.extreme_cobble_generator.container.CobbleGeneratorContainer;
-import info.u_team.extreme_cobble_generator.tileentity.CobbleGeneratorTileEntity;
 import info.u_team.u_team_core.gui.elements.EnergyStorageWidget;
 import info.u_team.u_team_core.gui.elements.ScalableButton;
 import info.u_team.u_team_core.gui.elements.ScalableSlider;
@@ -48,7 +48,7 @@ public class CobbleGeneratorScreen extends UBasicContainerScreen<CobbleGenerator
 	protected void init() {
 		super.init();
 		
-		final CobbleGeneratorTileEntity tileEntity = container.getTileEntity();
+		final CobbleGeneratorBlockEntity tileEntity = container.getTileEntity();
 		
 		addButton(new EnergyStorageWidget(guiLeft + 9, guiTop + 20, 54, () -> tileEntity.getInternalEnergyStorage()));
 		
