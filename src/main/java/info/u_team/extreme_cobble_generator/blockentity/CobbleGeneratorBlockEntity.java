@@ -1,8 +1,8 @@
 package info.u_team.extreme_cobble_generator.blockentity;
 
 import info.u_team.extreme_cobble_generator.config.CommonConfig;
-import info.u_team.extreme_cobble_generator.container.CobbleGeneratorContainer;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorTileEntityTypes;
+import info.u_team.extreme_cobble_generator.menu.CobbleGeneratorMenu;
 import info.u_team.u_team_core.api.block.MenuSyncedBlockEntity;
 import info.u_team.u_team_core.api.sync.DataHolder;
 import info.u_team.u_team_core.api.sync.MessageHolder;
@@ -270,7 +270,7 @@ public class CobbleGeneratorBlockEntity extends UBlockEntity implements MenuSync
 	
 	@Override
 	public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
-		return new CobbleGeneratorContainer(id, playerInventory, this);
+		return new CobbleGeneratorMenu(id, playerInventory, this);
 	}
 	
 	// Message holder

@@ -1,4 +1,4 @@
-package info.u_team.extreme_cobble_generator.render.tileentity;
+package info.u_team.extreme_cobble_generator.render.blockentity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
