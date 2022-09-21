@@ -1,7 +1,7 @@
 package info.u_team.extreme_cobble_generator.blockentity;
 
 import info.u_team.extreme_cobble_generator.config.CommonConfig;
-import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorTileEntityTypes;
+import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBlockEntityTypes;
 import info.u_team.extreme_cobble_generator.menu.CobbleGeneratorMenu;
 import info.u_team.u_team_core.api.block.MenuSyncedBlockEntity;
 import info.u_team.u_team_core.api.sync.DataHolder;
@@ -71,7 +71,7 @@ public class CobbleGeneratorBlockEntity extends UBlockEntity implements MenuSync
 	private boolean first;
 	
 	public CobbleGeneratorBlockEntity(BlockPos pos, BlockState state) {
-		super(ExtremeCobbleGeneratorTileEntityTypes.GENERATOR.get(), pos, state);
+		super(ExtremeCobbleGeneratorBlockEntityTypes.GENERATOR.get(), pos, state);
 		internalEnergyStorage = new BasicEnergyStorage(capacity, maxReceive, maxReceive, 0) {
 			
 			@Override

@@ -2,7 +2,7 @@ package info.u_team.extreme_cobble_generator.block;
 
 import info.u_team.extreme_cobble_generator.blockentity.CobbleGeneratorBlockEntity;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorCreativeTabs;
-import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorTileEntityTypes;
+import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBlockEntityTypes;
 import info.u_team.u_team_core.block.UEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,7 +29,7 @@ public class CobbleGeneratorBlock extends UEntityBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	
 	public CobbleGeneratorBlock() {
-		super(ExtremeCobbleGeneratorCreativeTabs.TAB, Properties.of(Material.METAL).noOcclusion().strength(4), ExtremeCobbleGeneratorTileEntityTypes.GENERATOR);
+		super(ExtremeCobbleGeneratorCreativeTabs.TAB, Properties.of(Material.METAL).noOcclusion().strength(4), ExtremeCobbleGeneratorBlockEntityTypes.GENERATOR);
 		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
 	}
 	

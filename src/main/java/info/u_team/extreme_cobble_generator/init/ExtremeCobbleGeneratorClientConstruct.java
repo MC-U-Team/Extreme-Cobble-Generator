@@ -12,7 +12,7 @@ public class ExtremeCobbleGeneratorClientConstruct implements ModConstruct {
 	public void construct() {
 		BusRegister.registerMod(ExtremeCobbleGeneratorRenderTypes::registerMod);
 		BusRegister.registerMod(ExtremeCobbleGeneratorScreens::registerMod);
-		BusRegister.registerMod(ExtremeCobbleGeneratorTileEntityRenderers::registerMod);
+		BusRegister.registerMod(ExtremeCobbleGeneratorBlockEntityRenderers::registerMod);
 	}
 	
 }

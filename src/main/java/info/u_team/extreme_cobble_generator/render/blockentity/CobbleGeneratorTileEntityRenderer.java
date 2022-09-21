@@ -1,34 +1,39 @@
 package info.u_team.extreme_cobble_generator.render.blockentity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 
 import info.u_team.extreme_cobble_generator.blockentity.CobbleGeneratorBlockEntity;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
-public class CobbleGeneratorTileEntityRenderer extends TileEntityRenderer<CobbleGeneratorBlockEntity> {
+public class CobbleGeneratorTileEntityRenderer implements BlockEntityRenderer<CobbleGeneratorBlockEntity> {
 	
-	public CobbleGeneratorTileEntityRenderer(TileEntityRendererDispatcher rendererDispatcher) {
-		super(rendererDispatcher);
+	private final BlockEntityRenderDispatcher renderDispatcher;
+	private final ItemRenderer itemRenderer;
+	
+	public CobbleGeneratorTileEntityRenderer(BlockEntityRendererProvider.Context context) {
+		renderDispatcher = context.getBlockEntityRenderDispatcher();
+		itemRenderer = context.getItemRenderer();
 	}
 	
 	@Override
-	public void render(CobbleGeneratorBlockEntity tileEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-		if (!tileEntity.isWorking()) {
+	public void render(CobbleGeneratorBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+		if (!blockEntity.isWorking()) {
 			return;
 		}
-		matrixStack.push();
-		matrixStack.translate(0.5, 0.5, 0.5);
-		matrixStack.scale(0.5F, 0.5F, 0.5F);
-		matrixStack.rotate(Vector3f.YN.rotationDegrees(renderDispatcher.renderInfo.getRenderViewEntity().ticksExisted * 3));
-		Minecraft.getInstance().getItemRenderer().renderItem(new ItemStack(Items.COBBLESTONE), ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrixStack, buffer);
-		matrixStack.pop();
+		poseStack.pushPose();
+		poseStack.translate(0.5, 0.5, 0.5);
+		poseStack.scale(0.5F, 0.5F, 0.5F);
+		poseStack.mulPose(Vector3f.YN.rotationDegrees(renderDispatcher.camera.getEntity().tickCount * 3));
+		itemRenderer.renderStatic(new ItemStack(Items.COBBLESTONE), TransformType.FIXED, packedLight, packedOverlay, poseStack, bufferSource, 0);
+		poseStack.popPose();
 	}
 	
 }

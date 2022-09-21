@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegistryObject;
 
-public class ExtremeCobbleGeneratorTileEntityTypes {
+public class ExtremeCobbleGeneratorBlockEntityTypes {
 	
 	public static final BlockEntityTypeDeferredRegister TILE_ENTITY_TYPES = BlockEntityTypeDeferredRegister.create(ExtremeCobbleGeneratorMod.MODID);
 	

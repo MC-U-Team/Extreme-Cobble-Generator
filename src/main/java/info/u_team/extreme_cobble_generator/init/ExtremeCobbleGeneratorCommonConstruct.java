@@ -17,7 +17,7 @@ public class ExtremeCobbleGeneratorCommonConstruct implements ModConstruct {
 		
 		BusRegister.registerMod(ExtremeCobbleGeneratorBlocks::registerMod);
 		BusRegister.registerMod(ExtremeCobbleGeneratorContainerTypes::registerMod);
-		BusRegister.registerMod(ExtremeCobbleGeneratorTileEntityTypes::registerMod);
+		BusRegister.registerMod(ExtremeCobbleGeneratorBlockEntityTypes::registerMod);
 	}
 	
 }
