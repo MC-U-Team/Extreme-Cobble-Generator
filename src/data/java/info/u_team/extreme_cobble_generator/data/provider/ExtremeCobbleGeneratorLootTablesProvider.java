@@ -4,38 +4,20 @@ import static info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBl
 
 import java.util.function.BiConsumer;
 
-import info.u_team.u_team_core.data.CommonLootTablesProvider;
+import info.u_team.u_team_core.data.CommonLootTableProvider;
 import info.u_team.u_team_core.data.GenerationData;
-import info.u_team.u_team_core.intern.loot.SetTileEntityNBTLootFunction;
-import net.minecraft.loot.ConstantRange;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.conditions.SurvivesExplosion;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.LootTable;
 
-public class ExtremeCobbleGeneratorLootTablesProvider extends CommonLootTablesProvider {
+public class ExtremeCobbleGeneratorLootTablesProvider extends CommonLootTableProvider {
 	
 	public ExtremeCobbleGeneratorLootTablesProvider(GenerationData data) {
 		super(data);
 	}
 	
 	@Override
-	protected void registerLootTables(BiConsumer<ResourceLocation, LootTable> consumer) {
-		registerBlock(GENERATOR, addTileEntityLootTable(GENERATOR.get()), consumer);
-	}
-	
-	protected static LootTable addTileEntityLootTable(IItemProvider item) {
-		return LootTable.builder() //
-				.setParameterSet(LootParameterSets.BLOCK) //
-				.addLootPool(LootPool.builder() //
-						.rolls(ConstantRange.of(1)) //
-						.addEntry(ItemLootEntry.builder(item)) //
-						.acceptFunction(SetTileEntityNBTLootFunction.builder()) //
-						.acceptCondition(SurvivesExplosion.builder())) //
-				.build();
+	public void register(BiConsumer<ResourceLocation, LootTable> consumer) {
+		registerBlock(GENERATOR, addTileEntityBlockLootTable(GENERATOR.get()), consumer);
 	}
 	
 }

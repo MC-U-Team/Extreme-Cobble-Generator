@@ -7,10 +7,10 @@ import info.u_team.extreme_cobble_generator.data.provider.ExtremeCobbleGenerator
 import info.u_team.extreme_cobble_generator.data.provider.ExtremeCobbleGeneratorLootTablesProvider;
 import info.u_team.extreme_cobble_generator.data.provider.ExtremeCobbleGeneratorRecipesProvider;
 import info.u_team.u_team_core.data.GenerationData;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
 @EventBusSubscriber(modid = ExtremeCobbleGeneratorMod.MODID, bus = Bus.MOD)
 public class ExtremeCobbleGeneratorDataGenerator {
@@ -18,15 +18,12 @@ public class ExtremeCobbleGeneratorDataGenerator {
 	@SubscribeEvent
 	public static void data(GatherDataEvent event) {
 		final GenerationData data = new GenerationData(ExtremeCobbleGeneratorMod.MODID, event);
-		if (event.includeServer()) {
-			data.addProvider(ExtremeCobbleGeneratorLootTablesProvider::new);
-			data.addProvider(ExtremeCobbleGeneratorRecipesProvider::new);
-		}
-		if (event.includeClient()) {
-			data.addProvider(ExtremeCobbleGeneratorBlockStatesProvider::new);
-			data.addProvider(ExtremeCobbleGeneratorItemModelsProvider::new);
-			data.addProvider(ExtremeCobbleGeneratorLanguagesProvider::new);
-		}
+		data.addProvider(event.includeServer(), ExtremeCobbleGeneratorLootTablesProvider::new);
+		data.addProvider(event.includeServer(), ExtremeCobbleGeneratorRecipesProvider::new);
+		
+		data.addProvider(event.includeClient(), ExtremeCobbleGeneratorBlockStatesProvider::new);
+		data.addProvider(event.includeClient(), ExtremeCobbleGeneratorItemModelsProvider::new);
+		data.addProvider(event.includeClient(), ExtremeCobbleGeneratorLanguagesProvider::new);
 	}
 	
 }

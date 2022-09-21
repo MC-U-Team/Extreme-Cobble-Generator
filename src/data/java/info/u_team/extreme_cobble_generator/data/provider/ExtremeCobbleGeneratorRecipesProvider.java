@@ -4,32 +4,32 @@ import static info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBl
 
 import java.util.function.Consumer;
 
-import info.u_team.u_team_core.data.CommonRecipesProvider;
+import info.u_team.u_team_core.data.CommonRecipeProvider;
 import info.u_team.u_team_core.data.GenerationData;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.item.Items;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 
-public class ExtremeCobbleGeneratorRecipesProvider extends CommonRecipesProvider {
+public class ExtremeCobbleGeneratorRecipesProvider extends CommonRecipeProvider {
 	
 	public ExtremeCobbleGeneratorRecipesProvider(GenerationData data) {
 		super(data);
 	}
 	
 	@Override
-	protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-		ShapedRecipeBuilder.shapedRecipe(GENERATOR.get()) //
-				.patternLine("IAI") //
-				.patternLine("IGI") //
-				.patternLine("BCB") //
-				.key('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.key('B', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_IRON)) //
-				.key('A', Items.ANVIL) //
-				.key('G', getIngredientOfTag(Tags.Items.GLASS_PANES)) //
-				.key('C', getIngredientOfTag(Tags.Items.COBBLESTONE)) //
-				.addCriterion("has_cobblestone", hasItem(Items.COBBLESTONE)) //
-				.build(consumer);
+	public void register(Consumer<FinishedRecipe> consumer) {
+		ShapedRecipeBuilder.shaped(GENERATOR.get()) //
+				.pattern("IAI") //
+				.pattern("IGI") //
+				.pattern("BCB") //
+				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.define('B', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_IRON)) //
+				.define('A', Items.ANVIL) //
+				.define('G', getIngredientOfTag(Tags.Items.GLASS_PANES)) //
+				.define('C', getIngredientOfTag(Tags.Items.COBBLESTONE)) //
+				.unlockedBy("has_cobblestone", has(Items.COBBLESTONE)) //
+				.save(consumer);
 	}
 	
 }

@@ -13,7 +13,7 @@ public class ExtremeCobbleGeneratorLanguagesProvider extends CommonLanguagesProv
 	}
 	
 	@Override
-	public void addTranslations() {
+	public void register() {
 		// English
 		
 		add(TAB, "Extreme Cobblestone Generator");
