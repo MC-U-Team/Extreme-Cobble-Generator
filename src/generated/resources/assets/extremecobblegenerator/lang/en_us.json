@@ -5,5 +5,5 @@
 	"container.extremecobblegenerator.generator.description": "Can generate %s cobble per second",
 	"container.extremecobblegenerator.generator.idling": "Idling",
 	"container.extremecobblegenerator.generator.working": "Working",
-	"itemGroup.extremecobblegenerator.group": "Extreme Cobblestone Generator"
+	"itemGroup.extremecobblegenerator.tab": "Extreme Cobblestone Generator"
 }

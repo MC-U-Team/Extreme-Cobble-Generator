@@ -5,5 +5,5 @@
 	"container.extremecobblegenerator.generator.description": "Kann %s Kopfsteinpflaster pro Sekunde erzeugen",
 	"container.extremecobblegenerator.generator.idling": "Leerlauf",
 	"container.extremecobblegenerator.generator.working": "Arbeitet",
-	"itemGroup.extremecobblegenerator.group": "Extremer Pflasterstein Generator"
+	"itemGroup.extremecobblegenerator.tab": "Extremer Pflasterstein Generator"
 }
