@@ -1,36 +1,36 @@
 modLoader="javafml"
-loaderVersion="[36,)"
+loaderVersion="[43,)"
 issueTrackerURL="https://github.com/MC-U-Team/Extreme-Cobble-Generator/issues"
-displayURL="https://u-team.info/mods/extremecobblegenerator"
-logoFile="logo.png"
 license="Apache-2.0 License"
-credits="Team U-Team"
-authors="HyCraftHD"
 
 [[mods]]
 	modId="extremecobblegenerator"
 	version="${file.jarVersion}"
 	displayName="Extreme Cobble Generator"
+	displayURL="https://u-team.info/mods/extremecobblegenerator"
 	updateJSONURL="https://api.u-team.info/update/extremecobblegenerator.json"
-	description="This mod adds an extreme cobblestone generator that generates cobblestone from FE."
+	logoFile="logo.png"
+	credits="Team U-Team"
+	authors="HyCraftHD"
+	description="Join our discord server here: https://discord.hycrafthd.net\n\nThis mod adds an extreme cobblestone generator that generates cobblestone from FE."
 	
 	[[dependencies.extremecobblegenerator]]
 	    modId="forge"
 	    mandatory=true
-	    versionRange="[36.1.30,)"
+	    versionRange="[43.1.25,)"
 	    ordering="NONE"
 	    side="BOTH"
 	
 	[[dependencies.extremecobblegenerator]]
 	    modId="minecraft"
 	    mandatory=true
-	    versionRange="[1.16.5]"
+	    versionRange="[1.19.2]"
 	    ordering="NONE"
 	    side="BOTH"
 	    
 	[[dependencies.extremecobblegenerator]]
 	    modId="uteamcore"
 	    mandatory=true
-	    versionRange="[3.2.1.229,)"
+	    versionRange="[4.3.1.231,)"
 	    ordering="NONE"
 	    side="BOTH"
