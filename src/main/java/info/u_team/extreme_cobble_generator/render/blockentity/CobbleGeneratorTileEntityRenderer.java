@@ -29,6 +29,7 @@ public class CobbleGeneratorTileEntityRenderer implements BlockEntityRenderer<Co
 			return;
 		}
 		poseStack.pushPose();
+		
 		poseStack.translate(0.5, 0.5, 0.5);
 		poseStack.scale(0.5F, 0.5F, 0.5F);
 		poseStack.mulPose(Vector3f.YN.rotationDegrees(renderDispatcher.camera.getEntity().tickCount * 3));

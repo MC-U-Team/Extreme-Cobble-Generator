@@ -17,7 +17,7 @@ public class ExtremeCobbleGeneratorLootTablesProvider extends CommonLootTablePro
 	
 	@Override
 	public void register(BiConsumer<ResourceLocation, LootTable> consumer) {
-		registerBlock(GENERATOR, addTileEntityBlockLootTable(GENERATOR.get()), consumer);
+		registerBlock(GENERATOR, addBlockEntityBlockLootTable(GENERATOR.get()), consumer);
 	}
 	
 }
