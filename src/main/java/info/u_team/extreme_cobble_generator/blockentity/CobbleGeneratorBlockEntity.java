@@ -252,6 +252,16 @@ public class CobbleGeneratorBlockEntity extends UBlockEntity implements MenuSync
 	// Synced working state
 	
 	@Override
+	public void sendChunkLoadData(CompoundTag tag) {
+		tag.putBoolean("working", working);
+	}
+	
+	@Override
+	public void handleChunkLoadData(CompoundTag tag) {
+		working = tag.getBoolean("working");
+	}
+	
+	@Override
 	public void sendUpdateStateData(CompoundTag tag) {
 		tag.putBoolean("working", working);
 	}
