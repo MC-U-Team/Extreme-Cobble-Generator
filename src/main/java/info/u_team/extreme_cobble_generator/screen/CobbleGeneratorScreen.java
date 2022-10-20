@@ -105,7 +105,9 @@ public class CobbleGeneratorScreen extends UContainerMenuScreen<CobbleGeneratorM
 	@Override
 	public void containerTick() {
 		super.containerTick();
-		slider.setValue(menu.getBlockEntity().getAmount());
+		if (slider != null) {
+			slider.setValue(menu.getBlockEntity().getAmount());
+		}
 	}
 	
 	@Override
