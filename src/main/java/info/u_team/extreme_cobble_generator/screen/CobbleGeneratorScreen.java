@@ -8,7 +8,10 @@ import info.u_team.extreme_cobble_generator.menu.CobbleGeneratorMenu;
 import info.u_team.u_team_core.gui.elements.EnergyStorageWidget;
 import info.u_team.u_team_core.gui.elements.ScalableButton;
 import info.u_team.u_team_core.gui.elements.ScalableSlider;
+import info.u_team.u_team_core.gui.elements.USlider;
 import info.u_team.u_team_core.screen.UContainerMenuScreen;
+import info.u_team.u_team_core.util.RGBA;
+import info.u_team.u_team_core.util.RenderUtil;
 import info.u_team.u_team_core.util.WidgetUtil;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.FriendlyByteBuf;
@@ -29,7 +32,7 @@ public class CobbleGeneratorScreen extends UContainerMenuScreen<CobbleGeneratorM
 	private final Component workingTextComponent;
 	private final Component idlingTextComponent;
 	
-	private ScalableSlider slider;
+	private USlider slider;
 	
 	public CobbleGeneratorScreen(CobbleGeneratorMenu container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title, BACKGROUND, 176, 173);
@@ -57,14 +60,9 @@ public class CobbleGeneratorScreen extends UContainerMenuScreen<CobbleGeneratorM
 		addRenderableWidget(createAdjustButton(leftPos + 121, topPos + 20, minusTextComponent, -10));
 		addRenderableWidget(createAdjustButton(leftPos + 141, topPos + 20, minusTextComponent, -100));
 		
-		slider = addRenderableWidget(new ScalableSlider(leftPos + 36, topPos + 40, 120, 15, amountTextComponent, Component.empty(), 0, blockEntity.maxGeneration, blockEntity.getAmount(), false, true, true, 0.75F) {
-			
-			@Override
-			public void onRelease(double mouseX, double mouseY) {
-				super.onRelease(mouseX, mouseY);
-				sendUpdateMessage(CobbleGeneratorScreen.this.slider.getValueInt());
-			}
-		});
+		slider = addRenderableWidget(new ScalableSlider(leftPos + 36, topPos + 40, 120, 15, amountTextComponent, Component.empty(), 0, blockEntity.maxGeneration, blockEntity.getAmount(), false, true, true, 0.75F, slider -> {
+			sendUpdateMessage(slider.getValueInt());
+		}));
 	}
 	
 	private ScalableButton createAdjustButton(int x, int y, Component component, int value) {
@@ -86,13 +84,14 @@ public class CobbleGeneratorScreen extends UContainerMenuScreen<CobbleGeneratorM
 	
 	@Override
 	public void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
+		super.renderLabels(poseStack, mouseX, mouseY);
 		font.drawWordWrap(Component.translatable("container.extremecobblegenerator.generator.description", menu.getBlockEntity().getAmount() * 20), 36, 58, 120, 0x404040);
 	}
 	
 	@Override
-	public void renderBackground(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-		super.renderBackground(poseStack, mouseX, mouseY, partialTicks);
-		blit(poseStack, leftPos + 155, topPos + 75, 10, 10, imageWidth + (menu.getBlockEntity().isWorking() ? 32 : 0), 0, 32, 32, backgroundWidth, backgroundHeight);
+	public void renderForeground(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+		super.renderForeground(poseStack, mouseX, mouseY, partialTicks);
+		RenderUtil.drawTexturedQuad(poseStack, leftPos + 155, topPos + 75, 10, 10, 32, 32, imageWidth + (menu.getBlockEntity().isWorking() ? 32 : 0), 0, backgroundWidth, backgroundHeight, 0, background, RGBA.WHITE);
 	}
 	
 	@Override
@@ -104,28 +103,16 @@ public class CobbleGeneratorScreen extends UContainerMenuScreen<CobbleGeneratorM
 	}
 	
 	@Override
-	public boolean mouseReleased(double mouseX, double mouseY, int mouseButton) {
-		if (slider != null) {
-			slider.mouseReleased(mouseX, mouseY, mouseButton);
-		}
-		return super.mouseReleased(mouseX, mouseY, mouseButton);
-	}
-	
-	@Override
-	public void onClose() {
-		super.onClose();
-		if (slider != null && slider.dragging) {
-			sendUpdateMessage(slider.getValueInt());
-		}
-	}
-	
-	@Override
 	public void containerTick() {
 		super.containerTick();
-		if (slider != null && !slider.dragging) {
-			slider.setValue(menu.getBlockEntity().getAmount());
-			slider.updateSlider();
-		}
+		slider.setValue(menu.getBlockEntity().getAmount());
 	}
 	
+	@Override
+	public boolean mouseReleased(double mouseX, double mouseY, int button) {
+		if (slider != null) {
+			slider.mouseReleased(mouseX, mouseY, button);
+		}
+		return super.mouseReleased(mouseX, mouseY, button);
+	}
 }
