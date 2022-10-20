@@ -10,7 +10,6 @@ public class ExtremeCobbleGeneratorClientConstruct implements ModConstruct {
 	
 	@Override
 	public void construct() {
-		BusRegister.registerMod(ExtremeCobbleGeneratorRenderTypes::registerMod);
 		BusRegister.registerMod(ExtremeCobbleGeneratorScreens::registerMod);
 		BusRegister.registerMod(ExtremeCobbleGeneratorBlockEntityRenderers::registerMod);
 	}
