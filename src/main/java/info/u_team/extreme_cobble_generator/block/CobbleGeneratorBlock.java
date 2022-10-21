@@ -1,8 +1,8 @@
 package info.u_team.extreme_cobble_generator.block;
 
 import info.u_team.extreme_cobble_generator.blockentity.CobbleGeneratorBlockEntity;
-import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorCreativeTabs;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBlockEntityTypes;
+import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorCreativeTabs;
 import info.u_team.u_team_core.block.UEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,6 +10,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
@@ -23,14 +24,24 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class CobbleGeneratorBlock extends UEntityBlock {
 	
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+	private static VoxelShape SHAPE = Shapes.join(Shapes.block(), box(1, 1, 1, 15, 15, 15), BooleanOp.ONLY_FIRST);
 	
 	public CobbleGeneratorBlock() {
-		super(ExtremeCobbleGeneratorCreativeTabs.TAB, Properties.of(Material.METAL).noOcclusion().strength(4), ExtremeCobbleGeneratorBlockEntityTypes.GENERATOR);
+		super(ExtremeCobbleGeneratorCreativeTabs.TAB, Properties.of(Material.METAL).noOcclusion().strength(4).isValidSpawn((state, level, pos, type) -> false), ExtremeCobbleGeneratorBlockEntityTypes.GENERATOR);
 		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
+	}
+	
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		return SHAPE;
 	}
 	
 	@Override
