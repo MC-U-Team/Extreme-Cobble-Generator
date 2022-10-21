@@ -9,9 +9,9 @@ import info.u_team.u_team_core.data.GenerationData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootTable;
 
-public class ExtremeCobbleGeneratorLootTablesProvider extends CommonLootTableProvider {
+public class ExtremeCobbleGeneratorLootTableProvider extends CommonLootTableProvider {
 	
-	public ExtremeCobbleGeneratorLootTablesProvider(GenerationData data) {
+	public ExtremeCobbleGeneratorLootTableProvider(GenerationData data) {
 		super(data);
 	}
 	

@@ -11,9 +11,9 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 
-public class ExtremeCobbleGeneratorRecipesProvider extends CommonRecipeProvider {
+public class ExtremeCobbleGeneratorRecipeProvider extends CommonRecipeProvider {
 	
-	public ExtremeCobbleGeneratorRecipesProvider(GenerationData data) {
+	public ExtremeCobbleGeneratorRecipeProvider(GenerationData data) {
 		super(data);
 	}
 	

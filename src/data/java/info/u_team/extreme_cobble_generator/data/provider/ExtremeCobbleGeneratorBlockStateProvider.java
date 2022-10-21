@@ -5,9 +5,9 @@ import static info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBl
 import info.u_team.u_team_core.data.CommonBlockStateProvider;
 import info.u_team.u_team_core.data.GenerationData;
 
-public class ExtremeCobbleGeneratorBlockStatesProvider extends CommonBlockStateProvider {
+public class ExtremeCobbleGeneratorBlockStateProvider extends CommonBlockStateProvider {
 	
-	public ExtremeCobbleGeneratorBlockStatesProvider(GenerationData data) {
+	public ExtremeCobbleGeneratorBlockStateProvider(GenerationData data) {
 		super(data);
 	}
 	

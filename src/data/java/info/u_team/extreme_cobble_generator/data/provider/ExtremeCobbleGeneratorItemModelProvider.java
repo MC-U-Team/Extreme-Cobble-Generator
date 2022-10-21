@@ -5,9 +5,9 @@ import static info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBl
 import info.u_team.u_team_core.data.CommonItemModelProvider;
 import info.u_team.u_team_core.data.GenerationData;
 
-public class ExtremeCobbleGeneratorItemModelsProvider extends CommonItemModelProvider {
+public class ExtremeCobbleGeneratorItemModelProvider extends CommonItemModelProvider {
 	
-	public ExtremeCobbleGeneratorItemModelsProvider(GenerationData data) {
+	public ExtremeCobbleGeneratorItemModelProvider(GenerationData data) {
 		super(data);
 	}
 	
