@@ -2,6 +2,7 @@ package info.u_team.extreme_cobble_generator.data;
 
 import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
 import info.u_team.extreme_cobble_generator.data.provider.ExtremeCobbleGeneratorBlockStateProvider;
+import info.u_team.extreme_cobble_generator.data.provider.ExtremeCobbleGeneratorBlockTagsProvider;
 import info.u_team.extreme_cobble_generator.data.provider.ExtremeCobbleGeneratorItemModelProvider;
 import info.u_team.extreme_cobble_generator.data.provider.ExtremeCobbleGeneratorLanguagesProvider;
 import info.u_team.extreme_cobble_generator.data.provider.ExtremeCobbleGeneratorLootTableProvider;
@@ -18,6 +19,7 @@ public class ExtremeCobbleGeneratorDataGenerator {
 	@SubscribeEvent
 	public static void data(GatherDataEvent event) {
 		final GenerationData data = new GenerationData(ExtremeCobbleGeneratorMod.MODID, event);
+		data.addProvider(event.includeServer(), ExtremeCobbleGeneratorBlockTagsProvider::new);
 		data.addProvider(event.includeServer(), ExtremeCobbleGeneratorLootTableProvider::new);
 		data.addProvider(event.includeServer(), ExtremeCobbleGeneratorRecipeProvider::new);
 		
