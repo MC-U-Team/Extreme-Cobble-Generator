@@ -189,14 +189,6 @@ public class CobbleGeneratorBlockEntity extends UBlockEntity implements MenuSync
 		return true;
 	}
 	
-	// Server side update
-	// private void markUpdate() {
-	// // world.markBlockRangeForRenderUpdate(pos, pos);
-	// world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-	// // world.scheduleBlockUpdate(pos, this.getBlockType(), 0, 0);
-	// markDirty();
-	// }
-	
 	// Nbt
 	
 	@Override
