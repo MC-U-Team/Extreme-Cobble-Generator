@@ -13,7 +13,7 @@ public class ExtremeCobbleGeneratorContainerTypes {
 	
 	public static final CommonDeferredRegister<MenuType<?>> CONTAINER_TYPES = CommonDeferredRegister.create(ForgeRegistries.MENU_TYPES, ExtremeCobbleGeneratorMod.MODID);
 	
-	public static final RegistryObject<MenuType<CobbleGeneratorMenu>> GENERATOR = CONTAINER_TYPES.register("generator", () -> new UMenuType<CobbleGeneratorMenu>(CobbleGeneratorMenu::new));
+	public static final RegistryObject<MenuType<CobbleGeneratorMenu>> GENERATOR = CONTAINER_TYPES.register("generator", () -> new UMenuType<>(CobbleGeneratorMenu::new));
 	
 	public static void registerMod(IEventBus bus) {
 		CONTAINER_TYPES.register(bus);
