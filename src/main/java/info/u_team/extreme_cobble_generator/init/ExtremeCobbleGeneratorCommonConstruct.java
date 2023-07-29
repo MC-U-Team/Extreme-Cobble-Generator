@@ -16,6 +16,7 @@ public class ExtremeCobbleGeneratorCommonConstruct implements ModConstruct {
 		
 		ExtremeCobbleGeneratorBlockEntityTypes.register();
 		ExtremeCobbleGeneratorBlocks.register();
+		ExtremeCobbleGeneratorCreativeTabs.register();
 		ExtremeCobbleGeneratorMenuTypes.register();
 	}
 	
