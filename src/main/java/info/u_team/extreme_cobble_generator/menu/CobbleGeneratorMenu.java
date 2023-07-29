@@ -1,29 +1,29 @@
 package info.u_team.extreme_cobble_generator.menu;
 
 import info.u_team.extreme_cobble_generator.blockentity.CobbleGeneratorBlockEntity;
-import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorContainerTypes;
+import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorMenuTypes;
+import info.u_team.u_team_core.api.network.NetworkEnvironment;
 import info.u_team.u_team_core.menu.UBlockEntityContainerMenu;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.LogicalSide;
 
 public class CobbleGeneratorMenu extends UBlockEntityContainerMenu<CobbleGeneratorBlockEntity> {
 	
 	// Client
 	public CobbleGeneratorMenu(int id, Inventory playerInventory, FriendlyByteBuf buffer) {
-		super(ExtremeCobbleGeneratorContainerTypes.GENERATOR.get(), id, playerInventory, buffer);
+		super(ExtremeCobbleGeneratorMenuTypes.GENERATOR.get(), id, playerInventory, buffer);
 	}
 	
 	// Server
 	public CobbleGeneratorMenu(int id, Inventory playerInventory, CobbleGeneratorBlockEntity tileEntity) {
-		super(ExtremeCobbleGeneratorContainerTypes.GENERATOR.get(), id, playerInventory, tileEntity);
+		super(ExtremeCobbleGeneratorMenuTypes.GENERATOR.get(), id, playerInventory, tileEntity);
 	}
 	
 	@Override
-	protected void init(LogicalSide side) {
+	protected void init(NetworkEnvironment environment) {
 		addPlayerInventory(playerInventory, 8, 91);
 		addDataHolderToClient(blockEntity.getEnergyHolder());
 		addDataHolderToClient(blockEntity.getWorkingHolder());

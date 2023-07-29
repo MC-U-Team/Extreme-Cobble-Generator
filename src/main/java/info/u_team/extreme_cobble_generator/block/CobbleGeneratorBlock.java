@@ -2,7 +2,6 @@ package info.u_team.extreme_cobble_generator.block;
 
 import info.u_team.extreme_cobble_generator.blockentity.CobbleGeneratorBlockEntity;
 import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorBlockEntityTypes;
-import info.u_team.extreme_cobble_generator.init.ExtremeCobbleGeneratorCreativeTabs;
 import info.u_team.u_team_core.block.UEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -22,7 +22,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -35,7 +36,7 @@ public class CobbleGeneratorBlock extends UEntityBlock {
 	private static VoxelShape SHAPE = Shapes.join(Shapes.block(), box(1, 1, 1, 15, 15, 15), BooleanOp.ONLY_FIRST);
 	
 	public CobbleGeneratorBlock() {
-		super(ExtremeCobbleGeneratorCreativeTabs.TAB, Properties.of(Material.METAL).noOcclusion().strength(4).isValidSpawn((state, level, pos, type) -> false), ExtremeCobbleGeneratorBlockEntityTypes.GENERATOR);
+		super(Properties.of().mapColor(MapColor.METAL).instrument(NoteBlockInstrument.IRON_XYLOPHONE).sound(SoundType.METAL).noOcclusion().strength(4, 20).isValidSpawn((state, level, pos, type) -> false), ExtremeCobbleGeneratorBlockEntityTypes.GENERATOR);
 		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
 	}
 	

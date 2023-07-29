@@ -1,19 +1,17 @@
 package info.u_team.extreme_cobble_generator.screen;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import info.u_team.extreme_cobble_generator.ExtremeCobbleGeneratorMod;
 import info.u_team.extreme_cobble_generator.blockentity.CobbleGeneratorBlockEntity;
 import info.u_team.extreme_cobble_generator.menu.CobbleGeneratorMenu;
 import info.u_team.u_team_core.gui.elements.EnergyStorageWidget;
-import info.u_team.u_team_core.gui.elements.ScalableButton;
-import info.u_team.u_team_core.gui.elements.ScalableSlider;
+import info.u_team.u_team_core.gui.elements.UButton;
 import info.u_team.u_team_core.gui.elements.USlider;
 import info.u_team.u_team_core.screen.UContainerMenuScreen;
 import info.u_team.u_team_core.util.RGBA;
 import info.u_team.u_team_core.util.RenderUtil;
-import info.u_team.u_team_core.util.WidgetUtil;
 import io.netty.buffer.Unpooled;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -60,17 +58,17 @@ public class CobbleGeneratorScreen extends UContainerMenuScreen<CobbleGeneratorM
 		addRenderableWidget(createAdjustButton(leftPos + 121, topPos + 20, minusTextComponent, -10));
 		addRenderableWidget(createAdjustButton(leftPos + 141, topPos + 20, minusTextComponent, -100));
 		
-		slider = addRenderableWidget(new ScalableSlider(leftPos + 36, topPos + 40, 120, 15, amountTextComponent, Component.empty(), 0, blockEntity.maxGeneration, blockEntity.getAmount(), false, true, true, 0.75F, slider -> {
+		slider = addRenderableWidget(new USlider(leftPos + 36, topPos + 40, 120, 15, amountTextComponent, Component.empty(), 0, blockEntity.maxGeneration, blockEntity.getAmount(), false, true, slider -> {
 			sendUpdateMessage(slider.getValueInt());
 		}));
+		slider.setScale(0.75F);
 	}
 	
-	private ScalableButton createAdjustButton(int x, int y, Component component, int value) {
-		return new ScalableButton(x, y, 15, 15, component, 0.75F, button -> sendUpdateAddValueMessage(value), (button, matrixStack, mouseX, mouseY) -> {
-			if (WidgetUtil.isHovered(button)) {
-				renderTooltip(matrixStack, component.copy().append(Integer.toString(Math.abs(value))), mouseX, mouseY);
-			}
-		});
+	private UButton createAdjustButton(int x, int y, Component component, int value) {
+		final UButton button = new UButton(x, y, 15, 15, component, ubutton -> sendUpdateAddValueMessage(value));
+		button.setScale(0.75F);
+		button.setTooltip(Tooltip.create(component.copy().append(Integer.toString(Math.abs(value)))));
+		return button;
 	}
 	
 	private void sendUpdateAddValueMessage(int value) {
@@ -83,38 +81,38 @@ public class CobbleGeneratorScreen extends UContainerMenuScreen<CobbleGeneratorM
 	}
 	
 	@Override
-	public void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		super.renderLabels(poseStack, mouseX, mouseY);
-		font.drawWordWrap(Component.translatable("container.extremecobblegenerator.generator.description", menu.getBlockEntity().getAmount() * 20), 36, 58, 120, 0x404040);
+	public void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+		super.renderLabels(guiGraphics, mouseX, mouseY);
+		guiGraphics.drawWordWrap(font, Component.translatable("container.extremecobblegenerator.generator.description", menu.getBlockEntity().getAmount() * 20), 36, 58, 120, 0x404040);
 	}
 	
 	@Override
-	public void renderForeground(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-		super.renderForeground(poseStack, mouseX, mouseY, partialTicks);
-		RenderUtil.drawTexturedQuad(poseStack, leftPos + 155, topPos + 75, 10, 10, 32, 32, imageWidth + (menu.getBlockEntity().isWorking() ? 32 : 0), 0, backgroundWidth, backgroundHeight, 0, background, RGBA.WHITE);
+	public void renderForeground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		super.renderForeground(guiGraphics, mouseX, mouseY, partialTicks);
+		RenderUtil.drawTexturedQuad(guiGraphics.pose(), leftPos + 155, topPos + 75, 10, 10, 32, 32, imageWidth + (menu.getBlockEntity().isWorking() ? 32 : 0), 0, backgroundWidth, backgroundHeight, 0, background, RGBA.WHITE);
 	}
 	
 	@Override
-	public void renderToolTip(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-		super.renderToolTip(poseStack, mouseX, mouseY, partialTicks);
+	public void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		super.renderTooltip(guiGraphics, mouseX, mouseY, partialTicks);
 		if (isHovering(154, 74, 12, 12, mouseX, mouseY)) {
-			renderTooltip(poseStack, menu.getBlockEntity().isWorking() ? workingTextComponent : idlingTextComponent, mouseX, mouseY);
+			guiGraphics.renderTooltip(font, menu.getBlockEntity().isWorking() ? workingTextComponent : idlingTextComponent, mouseX, mouseY);
 		}
 	}
 	
-	@Override
-	public void containerTick() {
-		super.containerTick();
-		if (slider != null) {
-			slider.setValue(menu.getBlockEntity().getAmount());
-		}
-	}
-	
-	@Override
-	public boolean mouseReleased(double mouseX, double mouseY, int button) {
-		if (slider != null) {
-			slider.mouseReleased(mouseX, mouseY, button);
-		}
-		return super.mouseReleased(mouseX, mouseY, button);
-	}
+	// @Override
+	// public void containerTick() {
+	// super.containerTick();
+	// if (slider != null) {
+	// slider.setValue(menu.getBlockEntity().getAmount());
+	// }
+	// }
+	//
+	// @Override
+	// public boolean mouseReleased(double mouseX, double mouseY, int button) {
+	// if (slider != null) {
+	// slider.mouseReleased(mouseX, mouseY, button);
+	// }
+	// return super.mouseReleased(mouseX, mouseY, button);
+	// }
 }
