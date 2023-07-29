@@ -100,19 +100,11 @@ public class CobbleGeneratorScreen extends UContainerMenuScreen<CobbleGeneratorM
 		}
 	}
 	
-	// @Override
-	// public void containerTick() {
-	// super.containerTick();
-	// if (slider != null) {
-	// slider.setValue(menu.getBlockEntity().getAmount());
-	// }
-	// }
-	//
-	// @Override
-	// public boolean mouseReleased(double mouseX, double mouseY, int button) {
-	// if (slider != null) {
-	// slider.mouseReleased(mouseX, mouseY, button);
-	// }
-	// return super.mouseReleased(mouseX, mouseY, button);
-	// }
+	@Override
+	public void containerTick() {
+		super.containerTick();
+		if (slider != null && (!isDragging() || !slider.isHoveredOrFocused()) && minecraft.level.getGameTime() % 20 == 0) {
+			slider.setValue(menu.getBlockEntity().getAmount());
+		}
+	}
 }
