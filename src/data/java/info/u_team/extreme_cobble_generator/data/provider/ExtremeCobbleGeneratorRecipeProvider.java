@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import info.u_team.u_team_core.data.CommonRecipeProvider;
 import info.u_team.u_team_core.data.GenerationData;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
@@ -19,7 +20,7 @@ public class ExtremeCobbleGeneratorRecipeProvider extends CommonRecipeProvider {
 	
 	@Override
 	public void register(Consumer<FinishedRecipe> consumer) {
-		ShapedRecipeBuilder.shaped(GENERATOR.get()) //
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, GENERATOR.get()) //
 				.pattern("IAI") //
 				.pattern("IGI") //
 				.pattern("BCB") //

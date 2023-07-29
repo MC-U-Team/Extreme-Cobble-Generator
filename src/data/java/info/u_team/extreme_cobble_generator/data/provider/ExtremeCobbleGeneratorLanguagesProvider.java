@@ -16,7 +16,7 @@ public class ExtremeCobbleGeneratorLanguagesProvider extends CommonLanguagesProv
 	public void register() {
 		// English
 		
-		add(TAB, "Extreme Cobblestone Generator");
+		add(TAB.get(), "Extreme Cobblestone Generator");
 		addBlock(GENERATOR, "Extreme Cobblestone Generator");
 		add("container.extremecobblegenerator.generator", "Cobblestone Generator");
 		add("container.extremecobblegenerator.generator.amount", "Amount");
@@ -25,7 +25,7 @@ public class ExtremeCobbleGeneratorLanguagesProvider extends CommonLanguagesProv
 		add("container.extremecobblegenerator.generator.idling", "Idling");
 		
 		// German
-		add("de_de", TAB, "Extremer Pflasterstein Generator");
+		add("de_de", TAB.get(), "Extremer Pflasterstein Generator");
 		addBlock("de_de", GENERATOR, "Extremer Pflasterstein Generator");
 		add("de_de", "container.extremecobblegenerator.generator", "Pflasterstein Generator");
 		add("de_de", "container.extremecobblegenerator.generator.amount", "Betrag");
